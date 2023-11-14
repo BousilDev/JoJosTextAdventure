@@ -28,7 +28,7 @@ class Adventure:
   tangle     .setNeighbors(Vector("north" -> northForest, "east" -> home,   "south" -> southForest, "west" -> northForest))
   home       .setNeighbors(Vector(                                                                  "west" -> tangle     ))
 
-  // TODO: Uncomment the two lines below. Improve the code so that it places the items in clearing and southForest, respectively.
+
   clearing.addItem(Item("battery", "It's a small battery cell. Looks new."))
   southForest.addItem(Item("remote", "It's the remote control for your TV.\nWhat it was doing in the forest, you have no idea.\nProblem is, there's no battery."))
 

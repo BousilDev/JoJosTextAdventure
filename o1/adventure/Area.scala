@@ -58,7 +58,7 @@ class Area(var name: String, var description: String):
 
   def removeItem(itemName: String): Option[Item] =
     val ret = items.find(_.name==itemName)
-    items = items.filterNot(_.name==itemName) // TODO: tää on rikki
+    items = items.filterNot(_.name==itemName)
     ret
 
 
