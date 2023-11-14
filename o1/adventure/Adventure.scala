@@ -32,7 +32,11 @@ class Adventure:
   clearing.addItem(Item("battery", "It's a small battery cell. Looks new."))
   southForest.addItem(Item("remote", "It's the remote control for your TV.\nWhat it was doing in the forest, you have no idea.\nProblem is, there's no battery."))
 
+  private val jotaro   = Person("Jotaro Kujo", Stand("Star Patinum", 5, 5, 3, 5, 5, 5), 150)
+  private val kakkioin = Person("Kakyoin Noriaki", Stand("Hierophant Green", 3, 4, 5, 4, 3, 2), 100)
+  private val rubber   = Person("Rubber Soul", Stand("Yellow Temperance", 2, 3, 1, 5, 1, 2), 50)
 
+  private val persons = Vector[Person](jotaro, kakkioin, rubber)
   /** The character that the player controls in the game. */
   val player = Player(middle)
 
