@@ -90,11 +90,11 @@ class Player(startingArea: Area, startingPerson: Person):
   def use(fightMove: String): String =
     ???
 
-  def battle: String =
+  def battle: String = ???
 
 
   def drive(vehicle: String): String =
-    if this.currentLocation.contains(
+    //if this.currentLocation.contains(
     "I drive"
 
   //def switch(character: String): String = ???
