@@ -32,6 +32,7 @@ class Adventure:
   clearing.addItem(Item("battery", "It's a small battery cell. Looks new."))
   southForest.addItem(Item("remote", "It's the remote control for your TV.\nWhat it was doing in the forest, you have no idea.\nProblem is, there's no battery."))
 
+
   /** The character that the player controls in the game. */
   val player = Player(middle)
 
@@ -48,7 +49,11 @@ class Adventure:
   def isOver = this.isComplete || this.player.hasQuit || this.turnCount == this.timeLimit
 
   /** Returns a message that is to be displayed to the player at the beginning of the game. */
-  def welcomeMessage = "You are lost in the woods. Find your way back home.\n\nBetter hurry, 'cause Scalatut elämät is on real soon now. And you can't miss Scalkkarit, right?"
+  def welcomeMessage =
+    val message = "You have just been \"extracted\" from prison where you developed a power called a stand ability. Your grandfather and his loyal friend need your help to save your mother from a deadly illness which can be cured if a revived vampire is killed. You set on a 50-day-journey from Japan to Egypt with your grandfather and his friend Avdol (both are also stand users) to defeat the evil vampire Dio. Getting to Egypt just isn't going to be that easy because Dio has sent his assassins to kill you and your companions. You must face all threaths victorious and get to Egypt in time to win. If you fail, your mother dies and you lose the game."
+    val splitted = message.split(". ")
+    for line <- splitted do
+      println(line + '.')
 
 
   /** Returns a message that is to be displayed to the player at the end of the game. The message

@@ -23,6 +23,14 @@ class Action(input: String):
     case "drop"      => Some(actor.drop(this.modifiers))
     case "examine"   => Some(actor.examine(this.modifiers))
     case "inventory" => Some(actor.inventory)
+
+    case "use"       => Some(actor.use())
+    case "battle"    => Some(actor.battle)
+    case "drive"     => Some(actor.drive())
+    //case "switch"    => Some(actor.switch())
+
+
+
     case other       => None
 
   /** Returns a textual description of the action object, for debugging purposes. */
