@@ -14,6 +14,7 @@ class Area(var name: String, var description: String):
 
   private val neighbors = Map[String, Area]()
   private var items = Buffer[Item]()
+  private var vehicles = Buffer[Item]()
 
   /** Returns the area that can be reached from this area by moving in the given direction. The result
     * is returned in an `Option`; `None` is returned if there is no exit in the given direction. */
@@ -51,16 +52,17 @@ class Area(var name: String, var description: String):
   override def toString = this.name + ": " + this.description.replaceAll("\n", " ").take(150)
 
 
-
   def addItem(item: Item): Unit = items += item
+  def addVehicle(vehicle: Item): Unit = vehicles += vehicle
 
   def contains(itemName: String): Boolean = items.exists(_.name==itemName)
+  def containsVehicle(vehicleName: String): Boolean = vehicles.exists(_.name==vehicleName)
 
-  def removeItem(itemName: String): Option[Item] =
-    val ret = items.find(_.name==itemName)
+  def remove(itemName: String): Option[Item] =
+    val ret = (items++vehicles).find(_.name==itemName)
     items = items.filterNot(_.name==itemName)
+    vehicles = vehicles.filterNot(_.name==itemName)
     ret
-
 
 end Area
 

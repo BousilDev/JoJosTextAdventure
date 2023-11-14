@@ -8,12 +8,14 @@ import scala.collection.mutable.Map
   * A player object’s state is mutable: the player’s location and possessions can change,
   * for instance.
   *
-  * @param startingArea  the player’s initial location */
-class Player(startingArea: Area):
+  * @param startingArea  the player’s initial location
+ *  @param startingPerson the player's initial person, this has stores information of player's Stand as well*/
+class Player(startingArea: Area, startingPerson: Person):
 
   private var currentLocation = startingArea        // gatherer: changes in relation to the previous location
   private var quitCommandGiven = false              // one-way flag
   private var items = Map[String,Item]()
+  private var currentPerson = startingPerson
 
   /** Determines if the player has indicated a desire to quit the game. */
   def hasQuit = this.quitCommandGiven
@@ -65,7 +67,7 @@ class Player(startingArea: Area):
 
   def get(itemName: String): String =
     if this.currentLocation.contains(itemName) then
-      val newItem = this.currentLocation.removeItem(itemName).get
+      val newItem = this.currentLocation.remove(itemName).get
       items += (newItem.name,newItem)
       //items.addOne(newItem.name,newItem)
       "You pick up the " + newItem.name
@@ -79,6 +81,23 @@ class Player(startingArea: Area):
       "You are carrying:\n" + items.keys.mkString("\n")
     else
       "You are empty-handed."
+
+
+
+
+
+
+  def use(fightMove: String): String =
+    ???
+
+  def battle: String =
+
+
+  def drive(vehicle: String): String =
+    if this.currentLocation.contains(
+    "I drive"
+
+  //def switch(character: String): String = ???
 
 end Player
 
