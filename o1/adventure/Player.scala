@@ -16,6 +16,7 @@ class Player(startingArea: Area, startingPerson: Person):
   private var quitCommandGiven = false              // one-way flag
   private var items = Map[String,Item]()
   private var currentPerson = startingPerson
+  private var newBattle = Battle(currentPerson, currentPerson)
 
   /** Determines if the player has indicated a desire to quit the game. */
   def hasQuit = this.quitCommandGiven
@@ -69,7 +70,6 @@ class Player(startingArea: Area, startingPerson: Person):
     if this.currentLocation.contains(itemName) then
       val newItem = this.currentLocation.remove(itemName).get
       items += (newItem.name,newItem)
-      //items.addOne(newItem.name,newItem)
       "You pick up the " + newItem.name
     else
       "There is no " + itemName + " here to pick up."
@@ -90,7 +90,12 @@ class Player(startingArea: Area, startingPerson: Person):
   def use(fightMove: String): String =
     ???
 
-  def battle: String = ???
+  def battle(enemy: String): String =
+    if currentLocation.contains(enemy) then
+      newBattle = Battle(currentPerson, currentLocation.getEnemy(enemy).get)
+      newBattle.startBattle
+    else
+      "No enemy called " + enemy + " found"
 
 
   def drive(vehicle: String): String =

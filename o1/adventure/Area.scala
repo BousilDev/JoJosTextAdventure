@@ -15,6 +15,7 @@ class Area(var name: String, var description: String):
   private val neighbors = Map[String, Area]()
   private var items = Buffer[Item]()
   private var vehicles = Buffer[Item]()
+  private var enemies = Buffer[Person]()
 
   /** Returns the area that can be reached from this area by moving in the given direction. The result
     * is returned in an `Option`; `None` is returned if there is no exit in the given direction. */
@@ -31,6 +32,11 @@ class Area(var name: String, var description: String):
     * @see [[setNeighbor]] */
   def setNeighbors(exits: Vector[(String, Area)]) =
     this.neighbors ++= exits
+
+
+  def setEnemy(enemy: Person) = this.enemies += enemy
+
+  def getEnemy(enemy: String):Option[Person] = this.enemies.find(_.name == enemy)
 
 
   /** Returns a multi-line description of the area as a player sees it. This includes a basic
@@ -57,6 +63,7 @@ class Area(var name: String, var description: String):
 
   def contains(itemName: String): Boolean = items.exists(_.name==itemName)
   def containsVehicle(vehicleName: String): Boolean = vehicles.exists(_.name==vehicleName)
+  def containsEnemy(enemyName: String): Boolean = enemies.exists(_.name == enemyName)
 
   def remove(itemName: String): Option[Item] =
     val ret = (items++vehicles).find(_.name==itemName)
