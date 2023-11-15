@@ -13,12 +13,16 @@ class Adventure:
   /** the name of the game */
   val title = "A Forest Adventure"
 
-  private val middle      = Area("Forest", "You are somewhere in the forest. There are a lot of trees here.\nBirds are singing.")
-  private val northForest = Area("Forest", "You are somewhere in the forest. A tangle of bushes blocks further passage north.\nBirds are singing.")
-  private val southForest = Area("Forest", "The forest just goes on and on.")
-  private val clearing    = Area("Forest Clearing", "You are at a small clearing in the middle of forest.\nNearly invisible, twisted paths lead in many directions.")
-  private val tangle      = Area("Tangle of Bushes", "You are in a dense tangle of bushes. It's hard to see exactly where you're going.")
-  private val home        = Area("Home", "Home sweet home! Now the only thing you need is a working remote control.")
+  private val japan       = Area("Japan", "You are somewhere in the forest. There are a lot of trees here.\nBirds are singing.")
+  private val singapore   = Area("Singapore", "You are somewhere in the forest. A tangle of bushes blocks further passage north.\nBirds are singing.")
+  private val india       = Area("India", "The forest just goes on and on.")
+  private val pakistan    = Area("Pakistan", "You are at a small clearing in the middle of forest.\nNearly invisible, twisted paths lead in many directions.")
+  private val northEgypt  = Area("North Egypt", "You are in a dense tangle of bushes. It's hard to see exactly where you're going.")
+  private val southEgypt  = Area("South Egypt")
+  private val cairo       = Area("Cairo")
+  private val dioPalace   = Area("Dio's palace", "Home sweet home! Now the only thing you need is a working remote control.")
+
+
   private val destination = home
 
   middle     .setNeighbors(Vector("north" -> northForest, "east" -> tangle, "south" -> southForest, "west" -> clearing   ))
@@ -32,13 +36,15 @@ class Adventure:
   clearing.addItem(Item("battery", "It's a small battery cell. Looks new."))
   southForest.addItem(Item("remote", "It's the remote control for your TV.\nWhat it was doing in the forest, you have no idea.\nProblem is, there's no battery."))
 
-  private val jotaro   = Person("Jotaro Kujo", Stand("Star Patinum", 5, 5, 3, 5, 5, 5), 150)
-  private val kakkioin = Person("Kakyoin Noriaki", Stand("Hierophant Green", 3, 4, 5, 4, 3, 2), 100)
-  private val rubber   = Person("Rubber Soul", Stand("Yellow Temperance", 2, 3, 1, 5, 1, 2), 50)
-
-  private val persons = Vector[Person](jotaro, kakkioin, rubber)
+  private val jotaro   = Person("Jotaro Kujo",     Stand("Star Patinum",      5, 5, 3, 5, 5, 5), 150)
+  private val kakkioin = Person("Kakyoin Noriaki", Stand("Hierophant Green",  3, 4, 5, 4, 3, 2), 100)
+  private val rubber   = Person("Rubber Soul",     Stand("Yellow Temperance", 2, 3, 1, 5, 1, 2), 50)
+  private val holHorse = Person("Hol Horse",       Stand("Emperor",           4, 4, 4, 3, 1, 1), 75)
+  private val enyaba   = Person("Enyaba",          Stand("Justice",           2, 1, 5, 5, 1, 1), 50)
+  private val dio      = Person("DIO",             Stand("THE WORLD",         5, 5, 3, 5, 4, 4), 250)
+  //private val persons = Vector[Person](jotaro, kakkioin, rubber)
   /** The character that the player controls in the game. */
-  val player = Player(middle)
+  val player = Player(middle, jotaro)
 
   /** The number of turns that have passed since the start of the game. */
   var turnCount = 0
