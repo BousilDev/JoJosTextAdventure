@@ -16,7 +16,7 @@ class Player(startingArea: Area, startingPerson: Person):
   private var quitCommandGiven = false              // one-way flag
   private var items = Map[String,Item]()
   private var currentPerson = startingPerson
-  private var newBattle = Battle(currentPerson, currentPerson)
+  private var newBattle:Option[Battle] = None
 
   /** Determines if the player has indicated a desire to quit the game. */
   def hasQuit = this.quitCommandGiven
@@ -45,6 +45,8 @@ class Player(startingArea: Area, startingPerson: Person):
   def quit() =
     this.quitCommandGiven = true
     ""
+
+  def isDefeated = this.currentPerson.isDefeated
 
   /** Returns a brief description of the player’s state, for debugging purposes. */
   override def toString = "Now at: " + this.location.name
@@ -88,14 +90,21 @@ class Player(startingArea: Area, startingPerson: Person):
 
 
   def use(fightMove: String): String =
-    ???
+    if newBattle.isDefined then
+      if !newBattle.get.hasEnded then
+        newBattle.get.use(fightMove,this.currentPerson)
+      else
+        "Your previous battle has already ended..." + "\n"
+    else
+      "There's no active battle right now..." + "\n"
+
 
   def battle(enemy: String): String =
     if currentLocation.contains(enemy) then
-      newBattle = Battle(currentPerson, currentLocation.getEnemy(enemy).get)
-      newBattle.startBattle
+      newBattle = Some(Battle(currentPerson, currentLocation.getEnemy(enemy).get))
+      newBattle.get.startBattle
     else
-      "No enemy called " + enemy + " found"
+      "No enemy called " + enemy + " found..." + "\n"
 
 
   def drive(vehicle: String): String =

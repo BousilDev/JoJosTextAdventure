@@ -9,6 +9,7 @@ package o1.adventure
 
 class Person(val name: String, val stand: Stand, var health: Int):
   private val baseHealth = health
+  var isDefeated = false
   
   def decreaseHealth(amount: Int):Unit = health -= amount
   

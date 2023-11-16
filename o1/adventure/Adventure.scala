@@ -56,7 +56,7 @@ class Adventure:
   def isComplete = this.player.location == this.destination && this.player.has("remote") && this.player.has("battery")
 
   /** Determines whether the player has won, lost, or quit, thereby ending the game. */
-  def isOver = this.isComplete || this.player.hasQuit || this.turnCount == this.timeLimit
+  def isOver = this.isComplete || this.player.hasQuit || this.turnCount == this.timeLimit || this.player.isDefeated
 
   /** Returns a message that is to be displayed to the player at the beginning of the game. */
   def welcomeMessage = "You have just been \"extracted\" from prison where you developed a power called a stand ability.\nYour grandfather and his loyal friend need your help to save your mother from a deadly illness which can be cured if a revived vampire is killed.\nYou set on a 50-day-journey from Japan to Egypt with your grandfather and his friend Avdol (both are also stand users) to defeat the evil vampire Dio.\nGetting to Egypt just isn't going to be that easy because Dio has sent his assassins to kill you and your companions.\nYou must face all threaths victorious and get to Egypt in time to win.\nIf you fail, your mother dies and you lose the game."

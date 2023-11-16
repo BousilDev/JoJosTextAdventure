@@ -1,4 +1,4 @@
 package o1.adventure
 
-class FightMove (name: String, damage: Int, length: Int):
-  ???
+class FightMove (val name: String, val damage: Int, val length: Int)
+  
