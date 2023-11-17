@@ -17,3 +17,5 @@ class Person(val name: String, val stand: Stand, var health: Int):
     health = baseHealth
     
   def heal(amount: Int):Unit = health += amount
+  
+  override def toString = this.name

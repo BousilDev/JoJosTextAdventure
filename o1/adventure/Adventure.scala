@@ -13,29 +13,35 @@ class Adventure:
   /** the name of the game */
   val title = "A Forest Adventure"
 
-  private val japan       = Area("Japan", "You are somewhere in the forest. There are a lot of trees here.\nBirds are singing.")
-  private val singapore   = Area("Singapore", "You are somewhere in the forest. A tangle of bushes blocks further passage north.\nBirds are singing.")
-  private val india       = Area("India", "The forest just goes on and on.")
-  private val pakistan    = Area("Pakistan", "You are at a small clearing in the middle of forest.\nNearly invisible, twisted paths lead in many directions.")
-  private val northEgypt  = Area("North Egypt", "You are in a dense tangle of bushes. It's hard to see exactly where you're going.")
-  private val southEgypt  = Area("South Egypt")
-  private val cairo       = Area("Cairo")
-  private val dioPalace   = Area("Dio's palace", "Home sweet home! Now the only thing you need is a working remote control.")
+  private val japan           = Area("Tokyo", "Tokyo, the capital of Japan. \nIt is Jotaro Kujo's native city and the starting point for the heroes' journey.")
+  private val singapore       = Area("Singapore", "Singapore, a sovereign city-state and island situated right in the middle of South-Asia. \nIt is one of the richest and most developed cities in Asia.")
+  private val india           = Area("India", "A crowded pedestrian shopping area in Calcutta. \nIt is precisely there that Jean Pierre Polnareff encounters Hol Horse and begins to fight with him.")
+  private val pakistan        = Area("Pakistan", "You are at a small clearing in the middle of forest.\nNearly invisible, twisted paths lead in many directions.")
+  private val egyptianDesert  = Area("Egyptian desert", "The Egyptian desert. More dunes and rocky formations.")
+  private val nile            = Area("The River Nile", "The River Nile, one of the world's longest rivers and known for being the main artery of Egypt, the main reason of the rise of the Ancient Egyptian civilization. \nThe Joestar Group has to navigate down the Nile to reach Cairo.")
+  private val cairo           = Area("Cairo", "Cairo, the capital of Egypt. \nIt is the end goal of the heroes, as it is the city where DIO resides in his mansion. \nCairo is a sprawling city of 2,000,000 habitants at the time of the story and a long history, with labyrinthine streets and unique local customs.")
+  private val dioMansion      = Area("Dio's mansion", "Home sweet home! Now the only thing you need is a working remote control.")
 
+  private val home            = Area("Home", "an extravagant three-story mansion made of terracotta, noted to be quite old, situated in one of the older districts of Cairo. \nThe main building is surrounded by a wall and an extensive garden which includes numerous palm trees and other exotic plants.")
 
   private val destination = home
 
-  middle     .setNeighbors(Vector("north" -> northForest, "east" -> tangle, "south" -> southForest, "west" -> clearing   ))
-  northForest.setNeighbors(Vector(                        "east" -> tangle, "south" -> middle,      "west" -> clearing   ))
-  southForest.setNeighbors(Vector("north" -> middle,      "east" -> tangle, "south" -> southForest, "west" -> clearing   ))
-  clearing   .setNeighbors(Vector("north" -> northForest, "east" -> middle, "south" -> southForest, "west" -> northForest))
-  tangle     .setNeighbors(Vector("north" -> northForest, "east" -> home,   "south" -> southForest, "west" -> northForest))
-  home       .setNeighbors(Vector(                                                                  "west" -> tangle     ))
+  japan         .setNeighbors(Vector("north" -> india,                               "south" -> pakistan,  "west" -> singapore        ))
+  singapore     .setNeighbors(Vector("north" -> india,          "east" -> japan,     "south" -> pakistan,  "west" -> cairo            ))
+  india         .setNeighbors(Vector(                           "east" -> japan,     "south" -> singapore, "west" -> egyptianDesert   ))
+  pakistan      .setNeighbors(Vector("north" -> singapore,      "east" -> japan,                           "west" -> nile             ))
+  egyptianDesert.setNeighbors(Vector(                           "east" -> india,     "south" -> cairo                                 ))
+  nile          .setNeighbors(Vector("north" -> cairo,          "east" -> pakistan                                                    ))
+  cairo         .setNeighbors(Vector("north" -> egyptianDesert, "east" -> singapore, "south" -> nile,      "west" -> dioMansion       ))
+  dioMansion    .setNeighbors(Vector(                           "east" -> cairo                                                       ))
 
 
+  home          .setNeighbors(Vector(                                                                      "west" -> japan           ))
+
+/*
   clearing.addItem(Item("battery", "It's a small battery cell. Looks new."))
   southForest.addItem(Item("remote", "It's the remote control for your TV.\nWhat it was doing in the forest, you have no idea.\nProblem is, there's no battery."))
-
+*/
   private val jotaro   = Person("Jotaro Kujo",     Stand("Star Patinum",      5, 5, 3, 5, 5, 5), 150)
   private val kakkioin = Person("Kakyoin Noriaki", Stand("Hierophant Green",  3, 4, 5, 4, 3, 2), 100)
   private val rubber   = Person("Rubber Soul",     Stand("Yellow Temperance", 2, 3, 1, 5, 1, 2), 50)
@@ -43,8 +49,14 @@ class Adventure:
   private val enyaba   = Person("Enyaba",          Stand("Justice",           2, 1, 5, 5, 1, 1), 50)
   private val dio      = Person("DIO",             Stand("THE WORLD",         5, 5, 3, 5, 4, 4), 250)
   //private val persons = Vector[Person](jotaro, kakkioin, rubber)
+
+  japan     .setEnemy(kakkioin)
+  singapore .setEnemy(rubber)
+  india     .setEnemy(holHorse)
+  pakistan  .setEnemy(enyaba)
+  dioMansion.setEnemy(dio)
   /** The character that the player controls in the game. */
-  val player = Player(middle, jotaro)
+  val player = Player(japan, jotaro)
 
   /** The number of turns that have passed since the start of the game. */
   var turnCount = 0

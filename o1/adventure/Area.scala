@@ -48,7 +48,12 @@ class Area(var name: String, var description: String):
   def fullDescription =
     val exitList = "\n\nExits available: " + this.neighbors.keys.mkString(" ")
     val itemList = "\nYou see here: " + this.items.mkString(" ")
-    if items.nonEmpty then
+    val enemyList = "\nEnemies here: " + this.enemies.mkString(" ")
+    if items.nonEmpty && enemies.nonEmpty then
+      this.description + itemList + enemyList + exitList
+    else if items.isEmpty && enemies.nonEmpty then
+      this.description + enemyList + exitList
+    else if items.nonEmpty && enemies.isEmpty then
       this.description + itemList + exitList
     else
       this.description + exitList
