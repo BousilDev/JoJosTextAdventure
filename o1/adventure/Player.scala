@@ -94,6 +94,9 @@ class Player(startingArea: Area, startingPerson: Person):
       if !newBattle.get.hasEnded then
         val returnLine = newBattle.get.use(fightMove,this.currentPerson)
         currentLocation.setBattle(!newBattle.get.hasEnded)
+        if newBattle.get.hasEnded then
+          currentLocation.removeEnemy(newBattle.get.defender)
+          currentLocation.setAllowNeighbours(true)
         returnLine
       else
         "Your previous battle has already ended..." + "\n"

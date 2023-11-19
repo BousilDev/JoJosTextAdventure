@@ -11,7 +11,7 @@ package o1.adventure
 class Adventure:
 
   /** the name of the game */
-  val title = "A Forest Adventure"
+  val title = "JoJo's Text Adventure"
 
   private val japan           = Area("Tokyo", "Tokyo, the capital of Japan. \nIt is Jotaro Kujo's native city and the starting point for the heroes' journey.")
   private val singapore       = Area("Singapore", "Singapore, a sovereign city-state and island situated right in the middle of South-Asia. \nIt is one of the richest and most developed cities in Asia.")

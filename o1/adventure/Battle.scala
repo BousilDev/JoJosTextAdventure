@@ -27,7 +27,7 @@ class Battle (val attacker: Person, val defender: Person):
     // pick starter at random
     if Random.nextInt(2) == 1 then
       nextInTurn = defender
-    returnLine += "IT HAS BEEN DECIDED BY FAITH THAT " + nextInTurn.name + " WILL START THE BATTLE !" + "\n\n"
+    returnLine += "IT HAS BEEN DECIDED BY FAITH THAT " + nextInTurn.name + " WILL START THE BATTLE !"
     while nextInTurn == defender do
       returnLine += defenderTurn
 
@@ -47,29 +47,31 @@ class Battle (val attacker: Person, val defender: Person):
 
         enemy.decreaseHealth(damage)
 
-        // Here length used is multiplied with stands relative speed as follows: 5 -> 1, 4 -> 2, ..., 1 -> 5
-        val realLength = selectedMove.get.length * (6-user.stand.speed)
-        bothLengths(user) = bothLengths(user) - realLength
+        bothLengths(user) = bothLengths(user) - selectedMove.get.length
         returnLine += user.name + " DEALT " + damage + " DAMAGE TO " + enemy.name + "!" + '\n'
 
         if enemy.health <= 0 then
           returnLine += enemy.name + " HAS BEEN DEFEATED BY " + user.name + "!" + '\n'
           enemy.isDefeated = true
         else
+          returnLine += healthPoints(enemy)
           if movesRemaining(user,bothLengths(user)) then
             returnLine += user.name + " HAS STILL GOT SOME ENERGY TO USE!" +'\n'
           else
             nextInTurn = enemy
 
+            // Here stand speed is used
+            val speedMultiplier = user.stand.speed
+            val lengthBefore = bothLengths(user)
             // Stores the remaining "length" to be used in the next turn
-            bothLengths(user) = 100 + bothLengths(user)
+            bothLengths(user) = 80 + speedMultiplier*10 + bothLengths(user)
 
-            returnLine += user.name + " DOESN'T HAVE ENOUGH ENERGY FOR ANOTHER MOVE AND GIVES TURN TO " + enemy.name + "!" + '\n'
+            returnLine += user.name + " DOESN'T HAVE ENOUGH ENERGY (" + lengthBefore + ") FOR ANOTHER MOVE AND GIVES TURN TO " + enemy.name + "!" + '\n'
             if nextInTurn == defender then
               returnLine += defenderTurn
 
       else
-        returnLine += "YOU DON'T HAVE ENOUGH ENERGY TO DO THAT!" + '\n' + "TRY TO PICK ANOTHER MOVE!"
+        returnLine += "YOU ONLY HAVE " + bothLengths(user) + " ENERGY LEFT!" + '\n' + "TRY TO PICK ANOTHER MOVE!"
 
       if participants.exists(_.isDefeated) then
         battleEnded = true
@@ -96,7 +98,11 @@ class Battle (val attacker: Person, val defender: Person):
   private def movesRemaining(user: Person, lengthRemaining: Int):Boolean =
     user.stand.getFightMoves.exists(_.length <= lengthRemaining)
 
-  // Reduces turn "length" for given user
-  //private def reduceLength(user: Person, amount: Int) =
-    //bothLengths.updated(user,bothLengths(user)-amount)
-
+  private def healthPoints(person: Person):String =
+    var healthBar = " ["
+    for health <- 1 to person.health / 10 do
+      healthBar += "#"
+    for notHealth <- (person.health / 10) + 1 to person.baseHealth / 10 do
+      healthBar += " "
+    healthBar += "] "
+    person.name + ":" + healthBar + person.health + " HP\n"

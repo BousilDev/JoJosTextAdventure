@@ -13,6 +13,7 @@ import scala.collection.mutable.Map
 class Area(var name: String, var description: String):
 
   private val neighbors = Map[String, Area]()
+  private val hiddenNeighbors = Map[String, Area]()
   private var items = Buffer[Item]()
   private var vehicles = Buffer[Item]()
   private var enemies = Buffer[Person]()
@@ -26,14 +27,14 @@ class Area(var name: String, var description: String):
   /** Adds an exit from this area to the given area. The neighboring area is reached by moving in
     * the specified direction from this area. */
   def setNeighbor(direction: String, neighbor: Area) =
-    this.neighbors += direction -> neighbor
+    this.hiddenNeighbors += direction -> neighbor
 
   /** Adds exits from this area to the given areas. Calling this method is equivalent to calling
     * the `setNeighbor` method on each of the given direction–area pairs.
     * @param exits  contains pairs consisting of a direction and the neighboring area in that direction
     * @see [[setNeighbor]] */
   def setNeighbors(exits: Vector[(String, Area)]) =
-    this.neighbors ++= exits
+    this.hiddenNeighbors ++= exits
 
 
   def setEnemy(enemy: Person) = this.enemies += enemy
@@ -46,6 +47,8 @@ class Area(var name: String, var description: String):
 
   def setCurrentPerson(person:Person) = this.currentPerson = Some(person)
 
+  // Sets neighbours "visible". Meant to be used after player has defeated the enemy in current location
+  def setAllowNeighbours(boolean:Boolean) = neighbors ++ hiddenNeighbors
 
   /** Returns a multi-line description of the area as a player sees it. This includes a basic
     * description of the area as well as information about exits and items. If there are no
@@ -78,7 +81,7 @@ class Area(var name: String, var description: String):
         val moveDamages = moves.map(_.damage)
         for num <- moves.indices do
           moveDescription += moveNames(num) + "     (" + moveLengths(num) + " Energy)" + "   (" + moveDamages(num) + " Damage)\n"
-      moveDescription + "\n\nCHOOSE ONE TO USE!"
+      moveDescription + "\nCHOOSE ONE TO USE!"
 
 
   /** Returns a single-line description of the area for debugging purposes. */
@@ -97,6 +100,9 @@ class Area(var name: String, var description: String):
     items = items.filterNot(_.name==itemName)
     vehicles = vehicles.filterNot(_.name==itemName)
     ret
+
+  def removeEnemy(enemy: Person) =
+    enemies = enemies.filterNot(_.name == enemy.name)
 
 end Area
 
