@@ -2,6 +2,7 @@ package o1.adventure
 
 import scala.util.Random
 import scala.collection.mutable.Buffer
+import scala.collection.mutable.Map
 
 class Battle (val attacker: Person, val defender: Person):
 
@@ -47,8 +48,9 @@ class Battle (val attacker: Person, val defender: Person):
         enemy.decreaseHealth(damage)
 
         // Here length used is multiplied with stands relative speed as follows: 5 -> 1, 4 -> 2, ..., 1 -> 5
-        bothLengths.updated(user,bothLengths(user)-(selectedMove.get.length * (6-user.stand.speed)))
-        returnLine += "DEALT " + damage + " DAMAGE TO " + enemy.name + "!" + '\n'
+        val realLength = selectedMove.get.length * (6-user.stand.speed)
+        bothLengths(user) = bothLengths(user) - realLength
+        returnLine += user.name + " DEALT " + damage + " DAMAGE TO " + enemy.name + "!" + '\n'
 
         if enemy.health <= 0 then
           returnLine += enemy.name + " HAS BEEN DEFEATED BY " + user.name + "!" + '\n'
@@ -60,7 +62,7 @@ class Battle (val attacker: Person, val defender: Person):
             nextInTurn = enemy
 
             // Stores the remaining "length" to be used in the next turn
-            bothLengths.updated(user,100 + bothLengths(user))
+            bothLengths(user) = 100 + bothLengths(user)
 
             returnLine += user.name + " DOESN'T HAVE ENOUGH ENERGY FOR ANOTHER MOVE AND GIVES TURN TO " + enemy.name + "!" + '\n'
             if nextInTurn == defender then
@@ -81,7 +83,7 @@ class Battle (val attacker: Person, val defender: Person):
   private def defenderTurn:String =
     if movesRemaining(defender,bothLengths(defender)) then
       var move = defender.stand.getRandomFightMoveName
-      while defender.stand.getFightMove(move).get.length < bothLengths(defender) do
+      while defender.stand.getFightMove(move).get.length > bothLengths(defender) do
         move = defender.stand.getRandomFightMoveName
       this.use(move, defender)
 

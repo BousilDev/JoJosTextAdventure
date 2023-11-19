@@ -92,7 +92,9 @@ class Player(startingArea: Area, startingPerson: Person):
   def use(fightMove: String): String =
     if newBattle.isDefined then
       if !newBattle.get.hasEnded then
-        newBattle.get.use(fightMove,this.currentPerson)
+        val returnLine = newBattle.get.use(fightMove,this.currentPerson)
+        currentLocation.setBattle(!newBattle.get.hasEnded)
+        returnLine
       else
         "Your previous battle has already ended..." + "\n"
     else
@@ -100,8 +102,10 @@ class Player(startingArea: Area, startingPerson: Person):
 
 
   def battle(enemy: String): String =
-    if currentLocation.contains(enemy) then
+    if currentLocation.containsEnemy(enemy) then
       newBattle = Some(Battle(currentPerson, currentLocation.getEnemy(enemy).get))
+      currentLocation.setBattle(true)
+      this.currentLocation.setCurrentPerson(this.currentPerson)
       newBattle.get.startBattle
     else
       "No enemy called " + enemy + " found..." + "\n"

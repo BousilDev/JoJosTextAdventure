@@ -16,6 +16,8 @@ class Area(var name: String, var description: String):
   private var items = Buffer[Item]()
   private var vehicles = Buffer[Item]()
   private var enemies = Buffer[Person]()
+  private var hasBattle = false
+  private var currentPerson:Option[Person] = None
 
   /** Returns the area that can be reached from this area by moving in the given direction. The result
     * is returned in an `Option`; `None` is returned if there is no exit in the given direction. */
@@ -39,6 +41,12 @@ class Area(var name: String, var description: String):
   def getEnemy(enemy: String):Option[Person] = this.enemies.find(_.name == enemy)
 
 
+  // Sets the value of hasBattle to desired boolean value
+  def setBattle(boolean:Boolean) = this.hasBattle = boolean
+
+  def setCurrentPerson(person:Person) = this.currentPerson = Some(person)
+
+
   /** Returns a multi-line description of the area as a player sees it. This includes a basic
     * description of the area as well as information about exits and items. If there are no
     * items present, the return value has the form "DESCRIPTION\n\nExits available:
@@ -46,17 +54,31 @@ class Area(var name: String, var description: String):
     * value has the form "DESCRIPTION\nYou see here: ITEMS SEPARATED BY SPACES\n\nExits available:
     * DIRECTIONS SEPARATED BY SPACES". The items and directions are listed in an arbitrary order. */
   def fullDescription =
-    val exitList = "\n\nExits available: " + this.neighbors.keys.mkString(" ")
-    val itemList = "\nYou see here: " + this.items.mkString(" ")
-    val enemyList = "\nEnemies here: " + this.enemies.mkString(" ")
-    if items.nonEmpty && enemies.nonEmpty then
-      this.description + itemList + enemyList + exitList
-    else if items.isEmpty && enemies.nonEmpty then
-      this.description + enemyList + exitList
-    else if items.nonEmpty && enemies.isEmpty then
-      this.description + itemList + exitList
+    // When there is no battle
+    if !hasBattle then
+      val exitList = "\n\nExits available: " + this.neighbors.keys.mkString(" ")
+      val itemList = "\nYou see here: " + this.items.mkString(" ")
+      val enemyList = "\nEnemies here: " + this.enemies.mkString(" ")
+      if items.nonEmpty && enemies.nonEmpty then
+        this.description + itemList + enemyList + exitList
+      else if items.isEmpty && enemies.nonEmpty then
+        this.description + enemyList + exitList
+      else if items.nonEmpty && enemies.isEmpty then
+        this.description + itemList + exitList
+      else
+        this.description + exitList
+
+    // When a battle is going on
     else
-      this.description + exitList
+      var moveDescription = "YOUR ABILITIES ARE:\n\n"
+      if this.currentPerson.isDefined then
+        val moves = this.currentPerson.get.stand.getFightMoves
+        val moveNames = moves.map(_.name)
+        val moveLengths = moves.map(_.length)
+        val moveDamages = moves.map(_.damage)
+        for num <- moves.indices do
+          moveDescription += moveNames(num) + "     (" + moveLengths(num) + " Energy)" + "   (" + moveDamages(num) + " Damage)\n"
+      moveDescription + "\n\nCHOOSE ONE TO USE!"
 
 
   /** Returns a single-line description of the area for debugging purposes. */

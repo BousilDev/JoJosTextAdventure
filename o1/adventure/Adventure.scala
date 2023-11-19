@@ -50,11 +50,20 @@ class Adventure:
   private val dio      = Person("DIO",             Stand("THE WORLD",         5, 5, 3, 5, 4, 4), 250)
   //private val persons = Vector[Person](jotaro, kakkioin, rubber)
 
+  jotaro.stand.addFightMove(FightMove("Ora",10,75))
+  jotaro.stand.addFightMove(FightMove("Star Finger",20,120))
+  jotaro.stand.addFightMove(FightMove("ZA WARUDO",50,200))
+
+  kakkioin.stand.addFightMove(FightMove("Emerald Splash",50,140))
+  kakkioin.stand.addFightMove(FightMove("Marionette Control",15,90))
+
+
   japan     .setEnemy(kakkioin)
   singapore .setEnemy(rubber)
   india     .setEnemy(holHorse)
   pakistan  .setEnemy(enyaba)
   dioMansion.setEnemy(dio)
+
   /** The character that the player controls in the game. */
   val player = Player(japan, jotaro)
 
