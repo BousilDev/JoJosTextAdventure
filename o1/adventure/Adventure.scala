@@ -35,10 +35,6 @@ class Adventure:
   cairo         .setNeighbors(Vector("north" -> egyptianDesert, "east" -> singapore, "south" -> nile,      "west" -> dioMansion       ))
   dioMansion    .setNeighbors(Vector(                           "east" -> cairo                                                       ))
 
-
-  home          .setNeighbors(Vector(                                                                      "west" -> japan           ))
-
-
   japan.addVehicle(Item("airplane", "It's an airplane"))
 /*
   clearing.addItem(Item("battery", "It's a small battery cell. Looks new."))
@@ -76,7 +72,7 @@ class Adventure:
 
 
   /** Determines if the adventure is complete, that is, if the player has won. */
-  def isComplete = this.player.location == this.destination && this.player.has("remote") && this.player.has("battery")
+  def isComplete = !dioMansion.containsEnemy("DIO")
 
   /** Determines whether the player has won, lost, or quit, thereby ending the game. */
   def isOver = this.isComplete || this.player.hasQuit || this.turnCount == this.timeLimit || this.player.isDefeated

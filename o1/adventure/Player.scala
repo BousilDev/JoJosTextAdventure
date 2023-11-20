@@ -32,7 +32,7 @@ class Player(startingArea: Area, startingPerson: Person):
   def go(direction: String) =
     val destination = this.location.neighbor(direction)
     this.currentLocation = destination.getOrElse(this.currentLocation)
-    if destination.isDefined then "You drive to " + direction + " with your " + this.vehicles.head._1 + "." else "You can't go " + direction + "."
+    if destination.isDefined then "You drive to " + direction + " with your " + this.vehicles.last._1 + "." else "You can't go " + direction + "."
 
 
   /** Causes the player to rest for a short while (this has no substantial effect in game terms).
