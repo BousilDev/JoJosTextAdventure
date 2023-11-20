@@ -38,6 +38,8 @@ class Adventure:
 
   home          .setNeighbors(Vector(                                                                      "west" -> japan           ))
 
+
+  japan.addVehicle(Item("airplane", "It's an airplane"))
 /*
   clearing.addItem(Item("battery", "It's a small battery cell. Looks new."))
   southForest.addItem(Item("remote", "It's the remote control for your TV.\nWhat it was doing in the forest, you have no idea.\nProblem is, there's no battery."))
@@ -70,7 +72,7 @@ class Adventure:
   /** The number of turns that have passed since the start of the game. */
   var turnCount = 0
   /** The maximum number of turns that this adventure game allows before time runs out. */
-  val timeLimit = 40
+  val timeLimit = 50
 
 
   /** Determines if the adventure is complete, that is, if the player has won. */

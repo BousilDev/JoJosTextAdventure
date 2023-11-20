@@ -13,13 +13,9 @@ class Battle (val attacker: Person, val defender: Person):
  * If user uses 1x70 length move, his length in the next turn will be "base value per turn" + ("lastLength" - "move costs") = 100 + (100-1x70) = 130
  * The latter case allows the utilization of larger combos (say there's a move that costs 120 lengths and is super powerful)
  */
-  //private var attackerLength = attacker -> 100
-  //private var defenderLength = defender -> 100
   private var bothLengths:Map[Person,Int] = Map(attacker -> 100, defender -> 100)
   private var participants:Buffer[Person] = Buffer(attacker, defender)
-
   private var nextInTurn:Person = attacker
-
   private var battleEnded = false
 
   def startBattle:String =
@@ -27,7 +23,7 @@ class Battle (val attacker: Person, val defender: Person):
     // pick starter at random
     if Random.nextInt(2) == 1 then
       nextInTurn = defender
-    returnLine += "IT HAS BEEN DECIDED BY FAITH THAT " + nextInTurn.name + " WILL START THE BATTLE !"
+    returnLine += "IT HAS BEEN DECIDED BY FAITH THAT " + nextInTurn.name + " WILL START THE BATTLE !\n"
     while nextInTurn == defender do
       returnLine += defenderTurn
 

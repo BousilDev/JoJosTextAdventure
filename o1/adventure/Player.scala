@@ -15,6 +15,7 @@ class Player(startingArea: Area, startingPerson: Person):
   private var currentLocation = startingArea        // gatherer: changes in relation to the previous location
   private var quitCommandGiven = false              // one-way flag
   private var items = Map[String,Item]()
+  private var vehicles = Map[String,Item]()
   private var currentPerson = startingPerson
   private var newBattle:Option[Battle] = None
 
@@ -31,7 +32,7 @@ class Player(startingArea: Area, startingPerson: Person):
   def go(direction: String) =
     val destination = this.location.neighbor(direction)
     this.currentLocation = destination.getOrElse(this.currentLocation)
-    if destination.isDefined then "You go " + direction + "." else "You can't go " + direction + "."
+    if destination.isDefined then "You drive to " + direction + " with your " + this.vehicles.head._1 + "." else "You can't go " + direction + "."
 
 
   /** Causes the player to rest for a short while (this has no substantial effect in game terms).
@@ -96,7 +97,7 @@ class Player(startingArea: Area, startingPerson: Person):
         currentLocation.setBattle(!newBattle.get.hasEnded)
         if newBattle.get.hasEnded then
           currentLocation.removeEnemy(newBattle.get.defender)
-          currentLocation.setAllowNeighbours(true)
+          currentLocation.allowVehicles
         returnLine
       else
         "Your previous battle has already ended..." + "\n"
@@ -115,8 +116,13 @@ class Player(startingArea: Area, startingPerson: Person):
 
 
   def drive(vehicle: String): String =
-    //if this.currentLocation.contains(
-    "I drive"
+    if this.currentLocation.containsVehicle(vehicle) then
+      val newVehicle = this.currentLocation.remove(vehicle).get
+      vehicles += (newVehicle.name,newVehicle)
+      currentLocation.allowNeighbours
+      "You hop on " + newVehicle.name
+    else
+      "No vehicle called " + vehicle + " found here..."
 
   //def switch(character: String): String = ???
 

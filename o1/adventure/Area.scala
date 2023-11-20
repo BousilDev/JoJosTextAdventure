@@ -15,7 +15,9 @@ class Area(var name: String, var description: String):
   private val neighbors = Map[String, Area]()
   private val hiddenNeighbors = Map[String, Area]()
   private var items = Buffer[Item]()
+  // Vehicles are represented as "Items"
   private var vehicles = Buffer[Item]()
+  private var hiddenVehicles = Buffer[Item]()
   private var enemies = Buffer[Person]()
   private var hasBattle = false
   private var currentPerson:Option[Person] = None
@@ -48,7 +50,9 @@ class Area(var name: String, var description: String):
   def setCurrentPerson(person:Person) = this.currentPerson = Some(person)
 
   // Sets neighbours "visible". Meant to be used after player has defeated the enemy in current location
-  def setAllowNeighbours(boolean:Boolean) = neighbors ++ hiddenNeighbors
+  def allowNeighbours = neighbors ++= hiddenNeighbors
+
+  def allowVehicles = vehicles ++= hiddenVehicles
 
   /** Returns a multi-line description of the area as a player sees it. This includes a basic
     * description of the area as well as information about exits and items. If there are no
@@ -59,14 +63,15 @@ class Area(var name: String, var description: String):
   def fullDescription =
     // When there is no battle
     if !hasBattle then
+      val allItems = this.items++this.vehicles
       val exitList = "\n\nExits available: " + this.neighbors.keys.mkString(" ")
-      val itemList = "\nYou see here: " + this.items.mkString(" ")
+      val itemList = "\nYou see here: " + allItems.mkString(" ")
       val enemyList = "\nEnemies here: " + this.enemies.mkString(" ")
-      if items.nonEmpty && enemies.nonEmpty then
+      if allItems.nonEmpty && enemies.nonEmpty then
         this.description + itemList + enemyList + exitList
-      else if items.isEmpty && enemies.nonEmpty then
+      else if allItems.isEmpty && enemies.nonEmpty then
         this.description + enemyList + exitList
-      else if items.nonEmpty && enemies.isEmpty then
+      else if allItems.nonEmpty && enemies.isEmpty then
         this.description + itemList + exitList
       else
         this.description + exitList
@@ -89,7 +94,7 @@ class Area(var name: String, var description: String):
 
 
   def addItem(item: Item): Unit = items += item
-  def addVehicle(vehicle: Item): Unit = vehicles += vehicle
+  def addVehicle(vehicle: Item): Unit = hiddenVehicles += vehicle
 
   def contains(itemName: String): Boolean = items.exists(_.name==itemName)
   def containsVehicle(vehicleName: String): Boolean = vehicles.exists(_.name==vehicleName)
