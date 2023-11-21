@@ -1,0 +1,10 @@
+WALKTHROUGH GUIDE
+1. In the beginning you must challenge the only available enemy in Japan to a battle by typing "battle Kakyoin Noriaki".
+2. When you have defeated Kakyoin you should be able to see a vehicle appear. Use this vehicle by typing "drive airplane".
+3. When you have selected a suitable vehicle you should see all the possible exits. Pick one of the exits with "go" command to move in.
+4. In the next location you must again battle a new enemy (if you haven't visited this place before).
+5. The same cycle (steps 1-3) repeats with different vehicles and enemies.
+6. Once you reach Cairo, the destination of our hero, you must defeat DIO himself (again with "battle" command). Once DIO is defeated you win the game
+
+TIPS
+1. Don't move around or do unnecessary stuff too much since there's a time limit (50 turns or days in this context) so you better hurry up.
