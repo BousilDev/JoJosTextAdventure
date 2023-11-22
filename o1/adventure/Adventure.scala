@@ -22,45 +22,58 @@ class Adventure:
   private val cairo           = Area("Cairo", "Cairo, the capital of Egypt. \nIt is the end goal of the heroes, as it is the city where DIO resides in his mansion. \nCairo is a sprawling city of 2,000,000 habitants at the time of the story and a long history, with labyrinthine streets and unique local customs.")
   private val dioMansion      = Area("Dio's mansion", "Home sweet home! Now the only thing you need is a working remote control.")
 
-  private val home            = Area("Home", "an extravagant three-story mansion made of terracotta, noted to be quite old, situated in one of the older districts of Cairo. \nThe main building is surrounded by a wall and an extensive garden which includes numerous palm trees and other exotic plants.")
-
-  private val destination = home
-
-  japan         .setNeighbors(Vector("north" -> india,                               "south" -> pakistan,  "west" -> singapore        ))
-  singapore     .setNeighbors(Vector("north" -> india,          "east" -> japan,     "south" -> pakistan,  "west" -> cairo            ))
-  india         .setNeighbors(Vector(                           "east" -> japan,     "south" -> singapore, "west" -> egyptianDesert   ))
-  pakistan      .setNeighbors(Vector("north" -> singapore,      "east" -> japan,                           "west" -> nile             ))
-  egyptianDesert.setNeighbors(Vector(                           "east" -> india,     "south" -> cairo                                 ))
-  nile          .setNeighbors(Vector("north" -> cairo,          "east" -> pakistan                                                    ))
-  cairo         .setNeighbors(Vector("north" -> egyptianDesert, "east" -> singapore, "south" -> nile,      "west" -> dioMansion       ))
-  dioMansion    .setNeighbors(Vector(                           "east" -> cairo                                                       ))
-
-  japan.addVehicle(Item("airplane", "It's an airplane"))
-/*
-  clearing.addItem(Item("battery", "It's a small battery cell. Looks new."))
-  southForest.addItem(Item("remote", "It's the remote control for your TV.\nWhat it was doing in the forest, you have no idea.\nProblem is, there's no battery."))
-*/
   private val jotaro   = Person("Jotaro Kujo",     Stand("Star Patinum",      5, 5, 3, 5, 5, 5), 150)
-  private val kakkioin = Person("Kakyoin Noriaki", Stand("Hierophant Green",  3, 4, 5, 4, 3, 2), 100)
-  private val rubber   = Person("Rubber Soul",     Stand("Yellow Temperance", 2, 3, 1, 5, 1, 2), 50)
-  private val holHorse = Person("Hol Horse",       Stand("Emperor",           4, 4, 4, 3, 1, 1), 75)
-  private val enyaba   = Person("Enyaba",          Stand("Justice",           2, 1, 5, 5, 1, 1), 50)
+  private val kakkioin = Person("Kakyoin Noriaki", Stand("Hierophant Green",  3, 4, 5, 4, 3, 2), 125)
+  private val rubber   = Person("Rubber Soul",     Stand("Yellow Temperance", 2, 3, 1, 5, 1, 2), 100)
+  private val holHorse = Person("Hol Horse",       Stand("Emperor",           4, 4, 4, 3, 1, 1), 100)
+  private val enyaba   = Person("Enya the Hag",    Stand("Justice",           2, 1, 5, 5, 1, 1), 100)
   private val dio      = Person("DIO",             Stand("THE WORLD",         5, 5, 3, 5, 4, 4), 250)
-  //private val persons = Vector[Person](jotaro, kakkioin, rubber)
 
-  jotaro.stand.addFightMove(FightMove("Ora",10,75))
-  jotaro.stand.addFightMove(FightMove("Star Finger",20,120))
-  jotaro.stand.addFightMove(FightMove("ZA WARUDO",50,200))
+  japan         .setNeighbors(Vector("north" -> india,                               "south" -> pakistan,  "west" -> singapore     ))
+  singapore     .setNeighbors(Vector("north" -> india,          "east" -> japan,     "south" -> pakistan,  "west" -> cairo         ))
+  india         .setNeighbors(Vector(                           "east" -> japan,     "south" -> singapore, "west" -> egyptianDesert))
+  pakistan      .setNeighbors(Vector("north" -> singapore,      "east" -> japan,                           "west" -> nile          ))
+  egyptianDesert.setNeighbors(Vector(                           "east" -> india,     "south" -> cairo                              ))
+  nile          .setNeighbors(Vector("north" -> cairo,          "east" -> pakistan                                                 ))
+  cairo         .setNeighbors(Vector("north" -> egyptianDesert, "east" -> singapore, "south" -> nile,      "west" -> dioMansion    ))
+  dioMansion    .setNeighbors(Vector(                           "east" -> cairo                                                    ))
 
-  kakkioin.stand.addFightMove(FightMove("Emerald Splash",50,140))
-  kakkioin.stand.addFightMove(FightMove("Marionette Control",15,90))
-
+  japan         .addVehicle(Item("airplane", "It's an airplane"             ))
+  singapore     .addVehicle(Item("train",    "Atleast here it'n not late"   ))
+  india         .addVehicle(Item("Tuk-tuk",  "I need moor boullets"         ))
+  pakistan      .addVehicle(Item("jeep",     "Straight from WW2"            ))
+  egyptianDesert.addVehicle(Item("camel",    "prepare for drinking breaks"  ))
+  nile          .addVehicle(Item("raft",     "There are several holes in it"))
+  cairo         .addVehicle(Item("defender", "No functional clutch in site" ))
 
   japan     .setEnemy(kakkioin)
   singapore .setEnemy(rubber)
   india     .setEnemy(holHorse)
   pakistan  .setEnemy(enyaba)
   dioMansion.setEnemy(dio)
+
+  jotaro.stand.addFightMove(FightMove("Ora",8,75))
+  jotaro.stand.addFightMove(FightMove("Star Finger",20,120))
+  jotaro.stand.addHiddenFightMove(FightMove("ZA WARUDO",50,200))
+
+  kakkioin.stand.addFightMove(FightMove("Emerald Splash",50,140))
+  kakkioin.stand.addFightMove(FightMove("Marionette Control",15,90))
+
+  dio.stand.addFightMove(FightMove("ZA WARUDO",50,200))
+  dio.stand.addFightMove(FightMove("ROAD ROLLER", 29,250))
+  dio.stand.addFightMove(FightMove("Shotgun kick", 5,50))
+
+  holHorse.stand.addFightMove(FightMove("Run away",0,10))
+  holHorse.stand.addFightMove(FightMove("Homing shot",15,60))
+  holHorse.stand.addFightMove(FightMove("Pipe shot",25,75))
+
+  enyaba.stand.addFightMove(FightMove("Illusion",15,40))
+  enyaba.stand.addFightMove(FightMove("body control",25,60))
+
+
+
+
+
 
   /** The character that the player controls in the game. */
   val player = Player(japan, jotaro)
@@ -88,6 +101,8 @@ class Adventure:
       "Home at last... and phew, just in time! Well done!"
     else if this.turnCount == this.timeLimit then
       "Oh no! Time's up. Starved of entertainment, you collapse and weep like a child.\nGame over!"
+    else if this.player.isDefeated then
+      "You got fucked up bro"
     else  // game over due to player quitting
       "Quitter!"
 
