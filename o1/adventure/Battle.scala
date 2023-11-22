@@ -57,10 +57,9 @@ class Battle (val attacker: Person, val defender: Person):
             nextInTurn = enemy
 
             // Here stand speed is used
-            val speedMultiplier = user.stand.speed
             val lengthBefore = bothLengths(user)
             // Stores the remaining "length" to be used in the next turn
-            bothLengths(user) = 80 + speedMultiplier*10 + bothLengths(user)
+            bothLengths(user) = 80 + user.stand.speed*10 + bothLengths(user)
 
             returnLine += user.name + " DOESN'T HAVE ENOUGH ENERGY (" + lengthBefore + ") FOR ANOTHER MOVE AND GIVES TURN TO " + enemy.name + "!" + '\n'
             if nextInTurn == defender then
@@ -77,13 +76,27 @@ class Battle (val attacker: Person, val defender: Person):
 
   def hasEnded = battleEnded
 
+  def skipTurn(user:Person):String =
+    val otherPerson = participants.filterNot(_ == user).head
+    nextInTurn = otherPerson
+    var returnLine = user.name + " DECIDES TO OBSERVE THE SITUATION AND GIVES TURN TO " + otherPerson.name + "!\n"
+    bothLengths(user) = 80 + user.stand.speed*10 + bothLengths(user)
+    if nextInTurn == defender then
+      returnLine += defenderTurn
+    returnLine
+
   // Represents the turn of the enemy/defender
   private def defenderTurn:String =
     if movesRemaining(defender,bothLengths(defender)) then
+      var moveCounter = 0
       var move = defender.stand.getRandomFightMoveName
-      while defender.stand.getFightMove(move).get.length > bothLengths(defender) do
+      while defender.stand.getFightMove(move).get.length > bothLengths(defender) && moveCounter < 3 do
         move = defender.stand.getRandomFightMoveName
-      this.use(move, defender)
+        moveCounter += 1
+      if moveCounter >= 3 then
+        skipTurn(defender)
+      else
+        this.use(move, defender)
 
     else
       nextInTurn = attacker

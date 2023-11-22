@@ -27,6 +27,7 @@ class Action(input: String):
     case "use"       => Some(actor.use(this.modifiers))
     case "battle"    => Some(actor.battle(this.modifiers))
     case "drive"     => Some(actor.drive(this.modifiers))
+    case "skip"      => Some(actor.skip)
     //case "switch"    => Some(actor.switch())
 
 

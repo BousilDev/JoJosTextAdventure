@@ -96,6 +96,7 @@ class Player(startingArea: Area, startingPerson: Person):
         val returnLine = newBattle.get.use(fightMove,this.currentPerson)
         currentLocation.setBattle(!newBattle.get.hasEnded)
         if newBattle.get.hasEnded then
+          currentPerson.resetHealth
           currentLocation.removeEnemy(newBattle.get.defender)
           currentLocation.allowVehicles
         returnLine
@@ -107,9 +108,12 @@ class Player(startingArea: Area, startingPerson: Person):
 
   def battle(enemy: String): String =
     if currentLocation.containsEnemy(enemy) then
-      newBattle = Some(Battle(currentPerson, currentLocation.getEnemy(enemy).get))
+      val enemyPerson = currentLocation.getEnemy(enemy).get
+      newBattle = Some(Battle(currentPerson, enemyPerson))
       currentLocation.setBattle(true)
       this.currentLocation.setCurrentPerson(this.currentPerson)
+      if enemyPerson.name == "DIO" then
+        this.currentPerson.stand.learnHiddenMoves
       newBattle.get.startBattle
     else
       "No enemy called " + enemy + " found..." + "\n"
@@ -123,6 +127,16 @@ class Player(startingArea: Area, startingPerson: Person):
       "You hop on " + newVehicle.name
     else
       "No vehicle called " + vehicle + " found here..."
+
+
+  def skip:String =
+    if newBattle.isDefined then
+      if !newBattle.get.hasEnded then
+        newBattle.get.skipTurn(this.currentPerson)
+      else
+        "Your previous battle has already ended..." + "\n"
+    else
+      "There's no active battle right now..." + "\n"
 
   //def switch(character: String): String = ???
 
