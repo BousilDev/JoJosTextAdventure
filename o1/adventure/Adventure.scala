@@ -22,12 +22,12 @@ class Adventure:
   private val cairo           = Area("Cairo", "Cairo, the capital of Egypt. \nIt is the end goal of the heroes, as it is the city where DIO resides in his mansion. \nCairo is a sprawling city of 2,000,000 habitants at the time of the story and a long history, with labyrinthine streets and unique local customs.")
   private val dioMansion      = Area("Dio's mansion", "Home sweet home! Now the only thing you need is a working remote control.")
 
-  private val jotaro   = Person("Jotaro Kujo",     Stand("Star Patinum",      5, 5, 3, 5, 5, 5), 150)
-  private val kakkioin = Person("Kakyoin Noriaki", Stand("Hierophant Green",  3, 4, 5, 4, 3, 2), 125)
-  private val rubber   = Person("Rubber Soul",     Stand("Yellow Temperance", 2, 3, 1, 5, 1, 2), 100)
-  private val holHorse = Person("Hol Horse",       Stand("Emperor",           4, 4, 4, 3, 1, 1), 100)
-  private val enyaba   = Person("Enya the Hag",    Stand("Justice",           2, 1, 5, 5, 1, 1), 100)
-  private val dio      = Person("DIO",             Stand("THE WORLD",         5, 5, 3, 5, 4, 4), 250)
+  private val jotaro   = Person("jotaro kujo",     Stand("Star Patinum",      5, 5, 3, 5, 5, 5), 150, "Gimme a brake...")
+  private val kakkioin = Person("kakyoin noriaki", Stand("Hierophant Green",  3, 4, 5, 4, 3, 2), 125, "RERO RERO RERO RERO RERO RERO!")
+  private val rubber   = Person("rubber soul",     Stand("Yellow Temperance", 2, 3, 1, 5, 1, 2), 100, "DO YOU UNDERSTANNNNND!")
+  private val holHorse = Person("hol horse",       Stand("Emperor",           4, 4, 4, 3, 1, 1), 100, "\"The gun's mightier than the sword!\" Mmm, mmm, mmm. I love that line.")
+  private val enyaba   = Person("enya the hag",    Stand("Justice",           2, 1, 5, 5, 1, 1), 100, "Is that you Qtaro? Kyakyakekekeke")
+  private val dio      = Person("dio",             Stand("THE WORLD",         5, 5, 3, 5, 4, 4), 250, "Can a monkey reach a human? Compared to me, Dio... you are but a monkey, JoJo!")
 
   japan         .setHiddenNeighbors(Vector("north" -> india,                               "south" -> pakistan,  "west" -> singapore     ))
   singapore     .setHiddenNeighbors(Vector("north" -> india,          "east" -> japan,     "south" -> pakistan,  "west" -> cairo         ))
@@ -46,7 +46,7 @@ class Adventure:
   nile          .addVehicle(Item("raft",     "There are several holes in it"))
   cairo         .addVehicle(Item("defender", "No functional clutch in site" ))
   
-  cairo.addItem(Item("Map","It's a map which leads to DIO's secret mansion"))
+  cairo.addItem(Item("map","It's a map which leads to DIO's secret mansion"))
 
   japan     .setEnemy(kakkioin)
   singapore .setEnemy(rubber)
@@ -54,27 +54,27 @@ class Adventure:
   pakistan  .setEnemy(enyaba)
   dioMansion.setEnemy(dio)
 
-  jotaro.stand.addFightMove(FightMove("Ora",8,75))
-  jotaro.stand.addFightMove(FightMove("Star Finger",20,120))
-  jotaro.stand.addHiddenFightMove(FightMove("ZA WARUDO",50,200))
+  jotaro.stand.addFightMove(FightMove("ora",8,75))
+  jotaro.stand.addFightMove(FightMove("star finger",20,120))
+  jotaro.stand.addHiddenFightMove(FightMove("za warudo",50,250))
 
-  kakkioin.stand.addFightMove(FightMove("Emerald Splash",50,140))
-  kakkioin.stand.addFightMove(FightMove("Marionette Control",15,90))
+  kakkioin.stand.addFightMove(FightMove("emerald splash",50,140))
+  kakkioin.stand.addFightMove(FightMove("marionette control",15,90))
 
-  dio.stand.addFightMove(FightMove("ZA WARUDO",50,200))
-  dio.stand.addFightMove(FightMove("ROAD ROLLER", 29,250))
-  dio.stand.addFightMove(FightMove("Shotgun kick", 5,50))
+  dio.stand.addFightMove(FightMove("za warudo",50,250))
+  dio.stand.addFightMove(FightMove("road roller", 29,200))
+  dio.stand.addFightMove(FightMove("shotgun kick",5,50))
+  dio.stand.addFightMove(FightMove("throwing knives",10,60))
 
-  holHorse.stand.addFightMove(FightMove("Run away",0,10))
-  holHorse.stand.addFightMove(FightMove("Homing shot",15,60))
-  holHorse.stand.addFightMove(FightMove("Pipe shot",25,75))
+  holHorse.stand.addFightMove(FightMove("run away",0,10))
+  holHorse.stand.addFightMove(FightMove("homing shot",15,60))
+  holHorse.stand.addFightMove(FightMove("pipe shot",25,75))
 
-  enyaba.stand.addFightMove(FightMove("Illusion",15,40))
+  enyaba.stand.addFightMove(FightMove("illusion",15,40))
   enyaba.stand.addFightMove(FightMove("body control",25,60))
 
-
-
-
+  rubber.stand.addFightMove(FightMove("trickery",20,60))
+  rubber.stand.addFightMove(FightMove("assimilation",50,100))
 
 
   /** The character that the player controls in the game. */
@@ -87,22 +87,22 @@ class Adventure:
 
 
   /** Determines if the adventure is complete, that is, if the player has won. */
-  def isComplete = !dioMansion.containsEnemy("DIO")
+  def isComplete = !dioMansion.containsEnemy("dio")
 
   /** Determines whether the player has won, lost, or quit, thereby ending the game. */
   def isOver = this.isComplete || this.player.hasQuit || this.turnCount == this.timeLimit || this.player.isDefeated
 
   /** Returns a message that is to be displayed to the player at the beginning of the game. */
-  def welcomeMessage = "You have just been \"extracted\" from prison where you developed a power called a stand ability.\nYour grandfather and his loyal friend need your help to save your mother from a deadly illness which can be cured if a revived vampire is killed.\nYou set on a 50-day-journey from Japan to Egypt with your grandfather and his friend Avdol (both are also stand users) to defeat the evil vampire Dio.\nGetting to Egypt just isn't going to be that easy because Dio has sent his assassins to kill you and your companions.\nYou must face all threaths victorious and get to Egypt in time to win.\nIf you fail, your mother dies and you lose the game."
+  def welcomeMessage = "Your name is Jotaro Kujo.\nYou have just been \"extracted\" from prison where you developed a power called a stand ability.\nYour grandfather and his loyal friend need your help to save your mother from a deadly illness which can be cured if a revived vampire is killed.\nYou set on a 50-day-journey from Japan to Egypt with your grandfather and his friend Avdol (both are also stand users) to defeat the evil vampire Dio.\nGetting to Egypt just isn't going to be that easy because Dio has sent his assassins to kill you and your companions.\nYou must face all threaths victorious and get to Egypt in time to win.\nIf you fail, your mother dies and you lose the game."
 
 
   /** Returns a message that is to be displayed to the player at the end of the game. The message
     * will be different depending on whether or not the player has completed their quest. */
   def goodbyeMessage =
     if this.isComplete then
-      "Home at last... and phew, just in time! Well done!"
+      "You were able to kill the vampire DIO and your mother was saved from the illness!"
     else if this.turnCount == this.timeLimit then
-      "Oh no! Time's up. Starved of entertainment, you collapse and weep like a child.\nGame over!"
+      "Oh no! You weren't able to defeat DIO in 50 days and you mother was killed by the illness!"
     else if this.player.isDefeated then
       "You got fucked up bro"
     else  // game over due to player quitting

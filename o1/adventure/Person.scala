@@ -7,7 +7,7 @@ package o1.adventure
  * @param health Person's health, can range from 0 to 250 (inclusive)
  */
 
-class Person(val name: String, val stand: Stand, var health: Int):
+class Person(val name: String, val stand: Stand, var health: Int, val battleDescription: String):
   val baseHealth = health
   var isDefeated = false
   

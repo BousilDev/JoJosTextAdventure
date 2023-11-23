@@ -73,9 +73,8 @@ class Player(startingArea: Area, startingPerson: Person):
     if this.currentLocation.contains(itemName) then
       val newItem = this.currentLocation.remove(itemName).get
       items += (newItem.name,newItem)
-      if itemName == "Map" then
+      if itemName == "map" then
         currentLocation.allowVehicles
-        currentLocation.allowNeighbours
       "You pick up the " + newItem.name
     else
       "There is no " + itemName + " here to pick up."
@@ -115,7 +114,7 @@ class Player(startingArea: Area, startingPerson: Person):
       newBattle = Some(Battle(currentPerson, enemyPerson))
       currentLocation.setBattle(true)
       this.currentLocation.setCurrentPerson(this.currentPerson)
-      if enemyPerson.name == "DIO" then
+      if enemyPerson.name == "dio" then
         this.currentPerson.stand.learnHiddenMoves
       newBattle.get.startBattle
     else

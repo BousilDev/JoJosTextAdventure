@@ -19,7 +19,9 @@ class Battle (val attacker: Person, val defender: Person):
   private var battleEnded = false
 
   def startBattle:String =
-    var returnLine = "A BATTLE BETWEEN " + attacker.name + " AND " + defender.name + " BEGINS !" + '\n'
+    var returnLine = "A BATTLE BETWEEN " + attacker.name + " AND " + defender.name + " BEGINS !\n"
+                     + defender.name + " IS SAYING SOMETHING: " + defender.battleDescription + '\n'
+                     + attacker.name + " RESPONDS: " + attacker.battleDescription + '\n'
     // pick starter at random
     if Random.nextInt(2) == 1 then
       nextInTurn = defender
