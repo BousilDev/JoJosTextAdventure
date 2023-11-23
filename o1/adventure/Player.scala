@@ -138,6 +138,10 @@ class Player(startingArea: Area, startingPerson: Person):
     else
       "There's no active battle right now..." + "\n"
 
+
+  def help:String =
+    "You can use the following commands in addition to the original commands:\nbattle \"enemy\"\nuse \"fightMove\"\nskip\ndrive \"vehicle\""
+
   //def switch(character: String): String = ???
 
 end Player
