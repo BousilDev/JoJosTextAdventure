@@ -29,14 +29,14 @@ class Adventure:
   private val enyaba   = Person("Enya the Hag",    Stand("Justice",           2, 1, 5, 5, 1, 1), 100)
   private val dio      = Person("DIO",             Stand("THE WORLD",         5, 5, 3, 5, 4, 4), 250)
 
-  japan         .setNeighbors(Vector("north" -> india,                               "south" -> pakistan,  "west" -> singapore     ))
-  singapore     .setNeighbors(Vector("north" -> india,          "east" -> japan,     "south" -> pakistan,  "west" -> cairo         ))
-  india         .setNeighbors(Vector(                           "east" -> japan,     "south" -> singapore, "west" -> egyptianDesert))
-  pakistan      .setNeighbors(Vector("north" -> singapore,      "east" -> japan,                           "west" -> nile          ))
-  egyptianDesert.setNeighbors(Vector(                           "east" -> india,     "south" -> cairo                              ))
-  nile          .setNeighbors(Vector("north" -> cairo,          "east" -> pakistan                                                 ))
-  cairo         .setNeighbors(Vector("north" -> egyptianDesert, "east" -> singapore, "south" -> nile,      "west" -> dioMansion    ))
-  dioMansion    .setNeighbors(Vector(                           "east" -> cairo                                                    ))
+  japan         .setHiddenNeighbors(Vector("north" -> india,                               "south" -> pakistan,  "west" -> singapore     ))
+  singapore     .setHiddenNeighbors(Vector("north" -> india,          "east" -> japan,     "south" -> pakistan,  "west" -> cairo         ))
+  india         .setHiddenNeighbors(Vector(                           "east" -> japan,     "south" -> singapore, "west" -> egyptianDesert))
+  pakistan      .setHiddenNeighbors(Vector("north" -> singapore,      "east" -> japan,                           "west" -> nile          ))
+  egyptianDesert.setHiddenNeighbors(Vector(                           "east" -> india,     "south" -> cairo                              ))
+  nile          .setHiddenNeighbors(Vector("north" -> cairo,          "east" -> pakistan                                                 ))
+  cairo         .setHiddenNeighbors(Vector("north" -> egyptianDesert, "east" -> singapore, "south" -> nile,      "west" -> dioMansion    ))
+  dioMansion    .setHiddenNeighbors(Vector(                           "east" -> cairo                                                    ))
 
   japan         .addVehicle(Item("airplane", "It's an airplane"             ))
   singapore     .addVehicle(Item("train",    "Atleast here it'n not late"   ))
@@ -45,6 +45,8 @@ class Adventure:
   egyptianDesert.addVehicle(Item("camel",    "prepare for drinking breaks"  ))
   nile          .addVehicle(Item("raft",     "There are several holes in it"))
   cairo         .addVehicle(Item("defender", "No functional clutch in site" ))
+  
+  cairo.addItem(Item("Map","It's a map which leads to DIO's secret mansion"))
 
   japan     .setEnemy(kakkioin)
   singapore .setEnemy(rubber)

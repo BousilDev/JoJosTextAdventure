@@ -73,6 +73,9 @@ class Player(startingArea: Area, startingPerson: Person):
     if this.currentLocation.contains(itemName) then
       val newItem = this.currentLocation.remove(itemName).get
       items += (newItem.name,newItem)
+      if itemName == "Map" then
+        currentLocation.allowVehicles
+        currentLocation.allowNeighbours
       "You pick up the " + newItem.name
     else
       "There is no " + itemName + " here to pick up."
@@ -124,7 +127,7 @@ class Player(startingArea: Area, startingPerson: Person):
       val newVehicle = this.currentLocation.remove(vehicle).get
       vehicles += (newVehicle.name,newVehicle)
       currentLocation.allowNeighbours
-      "You hop on " + newVehicle.name
+      "You hop on " + newVehicle.name + "\n" + newVehicle.description
     else
       "No vehicle called " + vehicle + " found here..."
 

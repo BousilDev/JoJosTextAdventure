@@ -53,6 +53,8 @@ class Battle (val attacker: Person, val defender: Person):
           returnLine += healthPoints(enemy)
           if movesRemaining(user,bothLengths(user)) then
             returnLine += user.name + " HAS STILL GOT SOME ENERGY TO USE!" +'\n'
+            if user == defender then
+              returnLine += defenderTurn
           else
             nextInTurn = enemy
 
@@ -79,7 +81,7 @@ class Battle (val attacker: Person, val defender: Person):
   def skipTurn(user:Person):String =
     val otherPerson = participants.filterNot(_ == user).head
     nextInTurn = otherPerson
-    var returnLine = user.name + " DECIDES TO OBSERVE THE SITUATION AND GIVES TURN TO " + otherPerson.name + "!\n"
+    var returnLine = "\n" + user.name + " DECIDES TO OBSERVE THE SITUATION AND GIVES TURN TO " + otherPerson.name + "!\n"
     bothLengths(user) = 80 + user.stand.speed*10 + bothLengths(user)
     if nextInTurn == defender then
       returnLine += defenderTurn

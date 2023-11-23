@@ -36,8 +36,10 @@ class Area(var name: String, var description: String):
     * @param exits  contains pairs consisting of a direction and the neighboring area in that direction
     * @see [[setNeighbor]] */
   def setNeighbors(exits: Vector[(String, Area)]) =
+    this.neighbors ++= exits
+    
+  def setHiddenNeighbors(exits: Vector[(String, Area)]) =
     this.hiddenNeighbors ++= exits
-
 
   def setEnemy(enemy: Person) = this.enemies += enemy
 
