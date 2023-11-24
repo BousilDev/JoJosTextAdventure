@@ -46,7 +46,7 @@ class Battle (val attacker: Person, val defender: Person):
         enemy.decreaseHealth(damage)
 
         bothLengths(user) = bothLengths(user) - selectedMove.get.length
-        returnLine += user.name + " DEALT " + damage + " DAMAGE TO " + enemy.name + "!" + '\n'
+        returnLine += user.name + " DEALT " + damage + " DAMAGE TO " + enemy.name + " WITH \"" + selectedMove.get.name + "\"!" + '\n'
 
         if enemy.health <= 0 then
           returnLine += enemy.name + " HAS BEEN DEFEATED BY " + user.name + "!" + '\n'
@@ -70,7 +70,9 @@ class Battle (val attacker: Person, val defender: Person):
               returnLine += defenderTurn
 
       else
-        returnLine += "YOU ONLY HAVE " + bothLengths(user) + " ENERGY LEFT!" + '\n' + "TRY TO PICK ANOTHER MOVE!"
+        returnLine += user.name + " ONLY HAS " + bothLengths(user) + " ENERGY LEFT!" + '\n' + "PICK ANOTHER MOVE!"
+        if nextInTurn == defender then
+          returnLine += defenderTurn
 
       if participants.exists(_.isDefeated) then
         battleEnded = true
@@ -113,9 +115,9 @@ class Battle (val attacker: Person, val defender: Person):
 
   private def healthPoints(person: Person):String =
     var healthBar = " ["
-    for health <- 1 to person.health / 10 do
+    for health <- 1 to (person.health / 10.0).ceil.toInt do
       healthBar += "#"
-    for notHealth <- (person.health / 10) + 1 to person.baseHealth / 10 do
+    for notHealth <- (person.health / 10.0).ceil.toInt + 1 to (person.baseHealth / 10.0).ceil.toInt do
       healthBar += " "
     healthBar += "] "
     person.name + ":" + healthBar + person.health + " HP\n"

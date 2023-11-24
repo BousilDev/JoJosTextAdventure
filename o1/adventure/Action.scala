@@ -7,7 +7,7 @@ package o1.adventure
 class Action(input: String):
 
   private val commandText = input.trim.toLowerCase
-  private val verb        = commandText.takeWhile( _ != ' ' ).toLowerCase
+  private val verb        = commandText.takeWhile( _ != ' ' )
   private val modifiers   = commandText.drop(verb.length).trim
 
   /** Causes the given player to take the action represented by this object, assuming
@@ -23,15 +23,13 @@ class Action(input: String):
     case "drop"      => Some(actor.drop(this.modifiers))
     case "examine"   => Some(actor.examine(this.modifiers))
     case "inventory" => Some(actor.inventory)
-
+    
+    // All new commands
     case "use"       => Some(actor.use(this.modifiers))
     case "battle"    => Some(actor.battle(this.modifiers))
     case "drive"     => Some(actor.drive(this.modifiers))
     case "skip"      => Some(actor.skip)
     case "help"      => Some(actor.help)
-    //case "switch"    => Some(actor.switch())
-
-
 
     case other       => None
 
