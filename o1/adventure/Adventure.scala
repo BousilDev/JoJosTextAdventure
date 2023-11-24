@@ -45,7 +45,7 @@ class Adventure:
   pakistan      .addHiddenVehicle(Item("jeep",     "Straight from WW2"            ))
   egyptianDesert.addVehicle      (Item("camel",    "prepare for drinking breaks"  ))
   nile          .addVehicle      (Item("raft",     "There are several holes in it"))
-  cairo         .addHiddenVehicle(Item("defender", "No functional clutch in site" ))
+  cairo         .addVehicle(Item("defender", "No functional clutch in site" ))
   
   cairo.addItem(Item("map","It's a map which leads to DIO's secret mansion"))
 
@@ -88,7 +88,7 @@ class Adventure:
 
 
   /** Determines if the adventure is complete, that is, if the player has won. */
-  def isComplete = dioMansion.getEnemy("dio").get.health == 0
+  def isComplete = dio.health <= 0
 
   /** Determines whether the player has won, lost, or quit, thereby ending the game. */
   def isOver = this.isComplete || this.player.hasQuit || this.turnCount == this.timeLimit || this.player.isDefeated

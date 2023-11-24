@@ -119,7 +119,8 @@ class Player(startingArea: Area, startingPerson: Person):
     if this.currentLocation.containsVehicle(vehicle) then
       val newVehicle = this.currentLocation.remove(vehicle).get
       vehicles = Map(newVehicle.name -> newVehicle)
-      currentLocation.allowNeighbours
+      if !(vehicle == "defender") then
+        currentLocation.allowNeighbours
       "You hop on " + newVehicle.name + "\n" + newVehicle.description
     else
       "No vehicle called " + vehicle + " found here..."
