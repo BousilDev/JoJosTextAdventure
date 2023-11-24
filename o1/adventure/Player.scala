@@ -25,7 +25,6 @@ class Player(startingArea: Area, startingPerson: Person):
   /** Returns the player’s current location. */
   def location = this.currentLocation
 
-
   /** Attempts to move the player in the given direction. This is successful if there
     * is an exit from the player’s current location towards the direction name. Returns
     * a description of the result: "You go DIRECTION." or "You can't go DIRECTION." */
@@ -34,12 +33,10 @@ class Player(startingArea: Area, startingPerson: Person):
     this.currentLocation = destination.getOrElse(this.currentLocation)
     if destination.isDefined then "You drive to " + direction + " with your " + this.vehicles.last._1 + "." else "You can't go " + direction + "."
 
-
   /** Causes the player to rest for a short while (this has no substantial effect in game terms).
     * Returns a description of what happened. */
   def rest() =
     "You rest for a while. Better get a move on, though."
-
 
   /** Signals that the player wants to quit the game. Returns a description of what happened within
     * the game as a result (which is the empty string, in this case). */
@@ -51,8 +48,6 @@ class Player(startingArea: Area, startingPerson: Person):
 
   /** Returns a brief description of the player’s state, for debugging purposes. */
   override def toString = "Now at: " + this.location.name
-
-
 
   def drop(itemName: String):String =
     if has(itemName) then
@@ -87,16 +82,10 @@ class Player(startingArea: Area, startingPerson: Person):
     else
       "You are empty-handed."
 
-
-
-
-
-
   def use(fightMove: String): String =
     if newBattle.isDefined then
       if !newBattle.get.hasEnded then
         val returnLine = newBattle.get.use(fightMove,this.currentPerson)
-        currentLocation.setBattle(!newBattle.get.hasEnded)
         if newBattle.get.hasEnded then
           currentPerson.resetHealth
           currentLocation.removeEnemy(newBattle.get.defender)
@@ -107,29 +96,26 @@ class Player(startingArea: Area, startingPerson: Person):
     else
       "There's no active battle right now..." + "\n"
 
-
   def battle(enemy: String): String =
     if currentLocation.containsEnemy(enemy) then
       val enemyPerson = currentLocation.getEnemy(enemy).get
       newBattle = Some(Battle(currentPerson, enemyPerson))
-      currentLocation.setBattle(true)
-      this.currentLocation.setCurrentPerson(this.currentPerson)
+      currentLocation.setBattle(newBattle)
+      currentLocation.setCurrentPerson(this.currentPerson)
       if enemyPerson.name == "dio" then
-        this.currentPerson.stand.learnHiddenMoves
+        currentPerson.stand.learnHiddenMoves
       newBattle.get.startBattle
     else
       "No enemy called " + enemy + " found..." + "\n"
 
-
   def drive(vehicle: String): String =
     if this.currentLocation.containsVehicle(vehicle) then
       val newVehicle = this.currentLocation.remove(vehicle).get
-      vehicles += (newVehicle.name,newVehicle)
+      vehicles = Map(newVehicle.name -> newVehicle)
       currentLocation.allowNeighbours
       "You hop on " + newVehicle.name + "\n" + newVehicle.description
     else
       "No vehicle called " + vehicle + " found here..."
-
 
   def skip:String =
     if newBattle.isDefined then
@@ -140,11 +126,8 @@ class Player(startingArea: Area, startingPerson: Person):
     else
       "There's no active battle right now..." + "\n"
 
-
   def help:String =
     "You can use the following commands in addition to the original commands:\nbattle \"enemy\"\nuse \"fightMove\"\nskip\ndrive \"vehicle\""
-
-  //def switch(character: String): String = ???
 
 end Player
 

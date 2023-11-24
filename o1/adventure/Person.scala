@@ -1,9 +1,8 @@
 package o1.adventure
 
 /**
- * Person
- * @param name
- * @param stand
+ * @param name  Person's name (in lower case)
+ * @param stand This person's personal stand ability
  * @param health Person's health, can range from 0 to 250 (inclusive)
  */
 

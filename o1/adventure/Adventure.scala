@@ -38,13 +38,13 @@ class Adventure:
   cairo         .setHiddenNeighbors(Vector("north" -> egyptianDesert, "east" -> singapore, "south" -> nile,      "west" -> dioMansion    ))
   dioMansion    .setHiddenNeighbors(Vector(                           "east" -> cairo                                                    ))
 
-  japan         .addVehicle(Item("airplane", "It's an airplane"             ))
-  singapore     .addVehicle(Item("train",    "Atleast here it'n not late"   ))
-  india         .addVehicle(Item("tuk-tuk",  "I need moor boullets"         ))
-  pakistan      .addVehicle(Item("jeep",     "Straight from WW2"            ))
-  egyptianDesert.addVehicle(Item("camel",    "prepare for drinking breaks"  ))
-  nile          .addVehicle(Item("raft",     "There are several holes in it"))
-  cairo         .addVehicle(Item("defender", "No functional clutch in site" ))
+  japan         .addHiddenVehicle(Item("airplane", "It's an airplane"             ))
+  singapore     .addHiddenVehicle(Item("train",    "Atleast here it'n not late"   ))
+  india         .addHiddenVehicle(Item("tuk-tuk",  "I need moor boullets"         ))
+  pakistan      .addHiddenVehicle(Item("jeep",     "Straight from WW2"            ))
+  egyptianDesert.addVehicle      (Item("camel",    "prepare for drinking breaks"  ))
+  nile          .addVehicle      (Item("raft",     "There are several holes in it"))
+  cairo         .addHiddenVehicle(Item("defender", "No functional clutch in site" ))
   
   cairo.addItem(Item("map","It's a map which leads to DIO's secret mansion"))
 
@@ -93,7 +93,7 @@ class Adventure:
   def isOver = this.isComplete || this.player.hasQuit || this.turnCount == this.timeLimit || this.player.isDefeated
 
   /** Returns a message that is to be displayed to the player at the beginning of the game. */
-  def welcomeMessage = "Your name is Jotaro Kujo.\nYou have just been \"extracted\" from prison where you developed a power called a stand ability.\nYour grandfather and his loyal friend need your help to save your mother from a deadly illness which can be cured if a revived vampire is killed.\nYou set on a 50-day-journey from Japan to Egypt with your grandfather and his friend Avdol (both are also stand users) to defeat the evil vampire Dio.\nGetting to Egypt just isn't going to be that easy because Dio has sent his assassins to kill you and your companions.\nYou must face all threaths victorious and get to Egypt in time to win.\nIf you fail, your mother dies and you lose the game."
+  def welcomeMessage = "Based on the famous manga \"JoJo's Bizarre Adventure\" by Hirohiko Araki.\n\nYour name is Jotaro Kujo.\nYou have just been \"extracted\" from prison where you developed a power called a stand ability.\nYour grandfather and his loyal friend need your help to save your mother from a deadly illness which can be cured if a revived vampire is killed.\nYou set on a 50-day-journey from Japan to Egypt with your grandfather and his friend Avdol (both of them are also stand users) to defeat the evil vampire Dio.\nGetting to Egypt just isn't going to be that easy because Dio has sent his assassins to kill you and your companions.\nYou must face all threaths victorious and get to Egypt in time to win.\nIf you fail, your mother dies and you lose the game."
 
 
   /** Returns a message that is to be displayed to the player at the end of the game. The message

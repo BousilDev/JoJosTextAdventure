@@ -4,13 +4,19 @@ import scala.util.Random
 import scala.collection.mutable.Buffer
 import scala.collection.mutable.Map
 
+/**
+ * A Battle represents one instance of a battle between two participants.
+ * @param attacker The person who is attacking, usually the player
+ * @param defender The person who is defending, usually the enemy in the current location.
+ */
+
 class Battle (val attacker: Person, val defender: Person):
 
-/** These "lengths" describe the amount of time each contestant has per turn.
+/** These "lengths" or energies describe the amount of time each contestant has per turn.
  * For example, if there are two fight moves available, one costs 50 "length" and another 70 "length",
  * and the user has 100 "lengths" on his turn, he may use two times the 50 length move or once the 70 length move.
- * If user uses 2x50 length moves, his length in the next turn will be "base value per turn" + ("lastLength" - "move costs") = 100 + (100-2x50) = 100
- * If user uses 1x70 length move, his length in the next turn will be "base value per turn" + ("lastLength" - "move costs") = 100 + (100-1x70) = 130
+ * If user uses 2x50 length moves, his length in the next turn will be "base value per turn (determined by stand speed)" + ("lastLength" - "move costs") = 100 + (100-2x50) = 100
+ * If user uses 1x70 length move, his length in the next turn will be "base value per turn (determined by stand speed)" + ("lastLength" - "move costs") = 100 + (100-1x70) = 130
  * The latter case allows the utilization of larger combos (say there's a move that costs 120 lengths and is super powerful)
  */
   private var bothLengths:Map[Person,Int] = Map(attacker -> 100, defender -> 100)
@@ -18,11 +24,11 @@ class Battle (val attacker: Person, val defender: Person):
   private var nextInTurn:Person = attacker
   private var battleEnded = false
 
+  // Begins the battle and picks the starting person by random
   def startBattle:String =
     var returnLine = "A BATTLE BETWEEN " + attacker.name + " AND " + defender.name + " BEGINS !\n"
                      + defender.name + " IS SAYING SOMETHING: " + defender.battleDescription + '\n'
                      + attacker.name + " RESPONDS: " + attacker.battleDescription + '\n'
-    // pick starter at random
     if Random.nextInt(2) == 1 then
       nextInTurn = defender
     returnLine += "IT HAS BEEN DECIDED BY FAITH THAT " + nextInTurn.name + " WILL START THE BATTLE !\n"
@@ -31,6 +37,10 @@ class Battle (val attacker: Person, val defender: Person):
 
     returnLine
 
+  /** This method serves both attacker and defender with its functionality and is mainly used
+   * for returning a String value of what has happened in the battle when a given move is used
+   * by a given user.
+   */
   def use(move: String, user: Person):String =
     val selectedMove = user.stand.getFightMove(move)
     val enemy = participants.find(_ != user).head
@@ -81,7 +91,10 @@ class Battle (val attacker: Person, val defender: Person):
 
 
   def hasEnded = battleEnded
+  
+  def returnAttackerLength = bothLengths(attacker)
 
+  // Gives turn to the person whose turn is next
   def skipTurn(user:Person):String =
     val otherPerson = participants.filterNot(_ == user).head
     nextInTurn = otherPerson
@@ -113,6 +126,7 @@ class Battle (val attacker: Person, val defender: Person):
   private def movesRemaining(user: Person, lengthRemaining: Int):Boolean =
     user.stand.getFightMoves.exists(_.length <= lengthRemaining)
 
+  // Returns a String that represents "a health bar" of the given person
   private def healthPoints(person: Person):String =
     var healthBar = " ["
     for health <- 1 to (person.health / 10.0).ceil.toInt do

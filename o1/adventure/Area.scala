@@ -19,8 +19,8 @@ class Area(var name: String, var description: String):
   private var vehicles = Buffer[Item]()
   private var hiddenVehicles = Buffer[Item]()
   private var enemies = Buffer[Person]()
-  private var hasBattle = false
-  private var currentPerson:Option[Person] = None
+  private var currentBattle: Option[Battle] = None
+  private var currentPerson: Option[Person] = None
 
   /** Returns the area that can be reached from this area by moving in the given direction. The result
     * is returned in an `Option`; `None` is returned if there is no exit in the given direction. */
@@ -46,8 +46,14 @@ class Area(var name: String, var description: String):
   def getEnemy(enemy: String):Option[Person] = this.enemies.find(_.name == enemy)
 
 
-  // Sets the value of hasBattle to desired boolean value
-  def setBattle(boolean:Boolean) = this.hasBattle = boolean
+  // Set's the current battle
+  def setBattle(battle:Option[Battle]) = currentBattle = battle
+
+  private def hasBattle:Boolean =
+    if currentBattle.isDefined then
+      !currentBattle.get.hasEnded
+    else
+      false
 
   def setCurrentPerson(person:Person) = this.currentPerson = Some(person)
 
@@ -64,7 +70,7 @@ class Area(var name: String, var description: String):
     * DIRECTIONS SEPARATED BY SPACES". The items and directions are listed in an arbitrary order. */
   def fullDescription =
     // When there is no battle
-    if !hasBattle then
+    if !this.hasBattle then
       val allItems = this.items++this.vehicles
       var exitList = "\n\nExits available: " + this.neighbors.keys.mkString(" ")
       var itemList = ""
@@ -85,7 +91,7 @@ class Area(var name: String, var description: String):
         val moveDamages = moves.map(_.damage)
         for num <- moves.indices do
           moveDescription += moveNames(num) + "     (" + moveLengths(num) + " Energy)" + "   (" + moveDamages(num) + " Damage)\n"
-      moveDescription + "\nCHOOSE ONE TO USE!"
+      moveDescription + "\nYOU HAVE " + currentBattle.get.returnAttackerLength + " ENERGY LEFT!\nCHOOSE ONE TO USE!"
 
 
   /** Returns a single-line description of the area for debugging purposes. */
@@ -93,7 +99,8 @@ class Area(var name: String, var description: String):
 
 
   def addItem(item: Item): Unit = items += item
-  def addVehicle(vehicle: Item): Unit = hiddenVehicles += vehicle
+  def addVehicle(vehicle: Item): Unit = vehicles += vehicle
+  def addHiddenVehicle(vehicle: Item): Unit = hiddenVehicles += vehicle
 
   def contains(itemName: String): Boolean = items.exists(_.name==itemName)
   def containsVehicle(vehicleName: String): Boolean = vehicles.exists(_.name==vehicleName)
