@@ -101,7 +101,7 @@ object AdventureGUI extends SimpleSwingApplication:
       else
         this.turnOutput.text = info + "\n\n" + this.game.goodbyeMessage
       this.locationInfo.text = this.player.location.fullDescription
-      this.turnCounter.text = "Turns played: " + this.game.turnCount
+      this.turnCounter.text = "Turns played: " + this.game.turnCount + "     (turns remaining: " + (50 - this.game.turnCount) + ")"
 
   end top
 

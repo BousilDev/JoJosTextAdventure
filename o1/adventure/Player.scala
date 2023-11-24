@@ -69,7 +69,7 @@ class Player(startingArea: Area, startingPerson: Person):
       val newItem = this.currentLocation.remove(itemName).get
       items += (newItem.name,newItem)
       if itemName == "map" then
-        currentLocation.allowVehicles
+        currentLocation.allowNeighbours
       "You pick up the " + newItem.name
     else
       "There is no " + itemName + " here to pick up."
@@ -86,10 +86,7 @@ class Player(startingArea: Area, startingPerson: Person):
     if newBattle.isDefined then
       if !newBattle.get.hasEnded then
         val returnLine = newBattle.get.use(fightMove,this.currentPerson)
-        if newBattle.get.hasEnded then
-          currentPerson.resetHealth
-          currentLocation.removeEnemy(newBattle.get.defender)
-          currentLocation.allowVehicles
+        this.checkBattleStatus
         returnLine
       else
         "Your previous battle has already ended..." + "\n"
@@ -102,11 +99,21 @@ class Player(startingArea: Area, startingPerson: Person):
       newBattle = Some(Battle(currentPerson, enemyPerson))
       currentLocation.setBattle(newBattle)
       currentLocation.setCurrentPerson(this.currentPerson)
+
       if enemyPerson.name == "dio" then
         currentPerson.stand.learnHiddenMoves
-      newBattle.get.startBattle
+
+      val returnLine = newBattle.get.startBattle
+      this.checkBattleStatus
+      returnLine
     else
       "No enemy called " + enemy + " found..." + "\n"
+
+  private def checkBattleStatus: Unit =
+    if newBattle.get.hasEnded then
+      currentPerson.resetHealth
+      currentLocation.removeEnemy(newBattle.get.defender)
+      currentLocation.allowVehicles
 
   def drive(vehicle: String): String =
     if this.currentLocation.containsVehicle(vehicle) then
@@ -120,7 +127,9 @@ class Player(startingArea: Area, startingPerson: Person):
   def skip:String =
     if newBattle.isDefined then
       if !newBattle.get.hasEnded then
-        newBattle.get.skipTurn(this.currentPerson)
+        val returnLine = newBattle.get.skipTurn(this.currentPerson)
+        this.checkBattleStatus
+        returnLine
       else
         "Your previous battle has already ended..." + "\n"
     else

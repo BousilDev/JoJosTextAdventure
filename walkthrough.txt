@@ -1,10 +1,15 @@
 WALKTHROUGH GUIDE
-1. In the beginning you must challenge the only available enemy in Japan to a battle by typing "battle Kakyoin Noriaki".
-2. When you have defeated Kakyoin you should be able to see a vehicle appear. Use this vehicle by typing "drive airplane".
-3. When you have selected a suitable vehicle you should see all the possible exits. Pick one of the exits with "go" command to move in.
-4. In the next location you must again battle a new enemy (if you haven't visited this place before).
-5. The same cycle (steps 1-3) repeats with different vehicles and enemies.
-6. Once you reach Cairo, the destination of our hero, you must defeat DIO himself (again with "battle" command). Once DIO is defeated you win the game
+1. In the beginning you must challenge the only available enemy in Japan to a battle by typing "battle kakyoin noriaki".
+2. Use your available fight moves and energy wisely in order to beat your enemy.
+3. When you have defeated Kakyoin you should be able to see a vehicle appear. Use this vehicle by typing "drive airplane".
+4. When you have selected a suitable vehicle you should see all the possible exits. Pick one of the exits with "go" command to move in.
+5.1 If there's an enemy in your new location you must again battle your way to the next location (if you haven't visited this place before).
+5.2 If there isn't an enemy present you should be able to either see vehicles or items in the current location. Use these to get to your next location.
+6. The same cycle (steps 1-4) repeats with different vehicles and enemies.
+7. When you get to Cairo, the destination of our hero, you must take a map with you which leads you to Dio's Mansion
+8. Once you reach Dio's palace you must defeat DIO himself (again with "battle" command). Once DIO is defeated you win the game
 
 TIPS
 1. Don't move around or do unnecessary stuff too much since there's a time limit (50 turns or days in this context) so you better hurry up.
+2. Sometimes it might be wise to save your energy for a more powerful move.
+3. You learn your most powerful move while you battle against DIO. Use this move to your advantage.

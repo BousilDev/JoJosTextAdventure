@@ -32,7 +32,7 @@ class Battle (val attacker: Person, val defender: Person):
     if Random.nextInt(2) == 1 then
       nextInTurn = defender
     returnLine += "IT HAS BEEN DECIDED BY FAITH THAT " + nextInTurn.name + " WILL START THE BATTLE !\n"
-    while nextInTurn == defender do
+    while nextInTurn == defender && !battleEnded do
       returnLine += defenderTurn
 
     returnLine
@@ -48,7 +48,7 @@ class Battle (val attacker: Person, val defender: Person):
       "YOU DON'T HAVE A FIGHT MOVE CALLED " + move + "!"
     else
       var returnLine = ""
-      if selectedMove.get.length < bothLengths(user) && nextInTurn == user then
+      if selectedMove.get.length <= bothLengths(user) && nextInTurn == user && !battleEnded then
 
         // Stands power stat gets used here
         val damage = selectedMove.get.damage * user.stand.power
@@ -109,17 +109,28 @@ class Battle (val attacker: Person, val defender: Person):
     if movesRemaining(defender,bothLengths(defender)) then
       var moveCounter = 0
       var move = defender.stand.getRandomFightMoveName
+
       while defender.stand.getFightMove(move).get.length > bothLengths(defender) && moveCounter < 3 do
         move = defender.stand.getRandomFightMoveName
         moveCounter += 1
+
       if moveCounter >= 3 then
         skipTurn(defender)
       else
-        this.use(move, defender)
+        if move == "run away" then
+          battleEnded = true
+          bothLengths(defender) = 0
+          defender.decreaseHealth(250)
+          defender.name + " RAN AWAY!\n" + attacker.name + " DECIDES TO CONTINUE HIS JOURNEY!\n"
+        else
+          this.use(move, defender)
 
-    else
+    else if !battleEnded then
       nextInTurn = attacker
       defender.name + " HAS LOWERED HIS ATTACK, NOW IS YOUR CHANCE !" + "\n\n"
+
+    else
+      ""
 
 
   // Returns a boolean whether the user can still use moves on this turn

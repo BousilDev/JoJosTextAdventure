@@ -16,11 +16,11 @@ class Adventure:
   private val japan           = Area("Tokyo", "Tokyo, the capital of Japan. \nIt is Jotaro Kujo's native city and the starting point for the heroes' journey.")
   private val singapore       = Area("Singapore", "Singapore, a sovereign city-state and island situated right in the middle of South-Asia. \nIt is one of the richest and most developed cities in Asia.")
   private val india           = Area("India", "A crowded pedestrian shopping area in Calcutta. \nIt is precisely there that Jean Pierre Polnareff encounters Hol Horse and begins to fight with him.")
-  private val pakistan        = Area("Pakistan", "You are at a small clearing in the middle of forest.\nNearly invisible, twisted paths lead in many directions.")
+  private val pakistan        = Area("Pakistan", "When Enya the Hag meets the Joestar Group, she pretends to be a hotel owner and invites the heroes to sleep there. \nAt first glance, it seems like a simple hotel. \nHowever, it is a mere illusion.")
   private val egyptianDesert  = Area("Egyptian desert", "The Egyptian desert. More dunes and rocky formations.")
   private val nile            = Area("The River Nile", "The River Nile, one of the world's longest rivers and known for being the main artery of Egypt, the main reason of the rise of the Ancient Egyptian civilization. \nThe Joestar Group has to navigate down the Nile to reach Cairo.")
   private val cairo           = Area("Cairo", "Cairo, the capital of Egypt. \nIt is the end goal of the heroes, as it is the city where DIO resides in his mansion. \nCairo is a sprawling city of 2,000,000 habitants at the time of the story and a long history, with labyrinthine streets and unique local customs.")
-  private val dioMansion      = Area("Dio's mansion", "Home sweet home! Now the only thing you need is a working remote control.")
+  private val dioMansion      = Area("Dio's mansion", "DIO's mansion appears as an extravagant three-story mansion made of terracotta, noted to be quite old, situated in one of the older districts of Cairo. \nThe main building is surrounded by a wall and an extensive garden which includes numerous palm trees and other exotic plants. \nThere are four towers on each corner of the rectangular main building.")
 
   private val jotaro   = Person("jotaro kujo",     Stand("Star Patinum",      5, 5, 3, 5, 5, 5), 150, "Gimme a brake...")
   private val kakkioin = Person("kakyoin noriaki", Stand("Hierophant Green",  3, 4, 5, 4, 3, 2), 125, "RERO RERO RERO RERO RERO RERO!")
@@ -35,7 +35,8 @@ class Adventure:
   pakistan      .setHiddenNeighbors(Vector("north" -> singapore,      "east" -> japan,                           "west" -> nile          ))
   egyptianDesert.setHiddenNeighbors(Vector(                           "east" -> india,     "south" -> cairo                              ))
   nile          .setHiddenNeighbors(Vector("north" -> cairo,          "east" -> pakistan                                                 ))
-  cairo         .setHiddenNeighbors(Vector("north" -> egyptianDesert, "east" -> singapore, "south" -> nile,      "west" -> dioMansion    ))
+  cairo         .setHiddenNeighbors(Vector("west" -> dioMansion                                                                          ))
+  cairo         .setNeighbors(Vector("north" -> egyptianDesert, "east" -> singapore, "south" -> nile                                     ))
   dioMansion    .setHiddenNeighbors(Vector(                           "east" -> cairo                                                    ))
 
   japan         .addHiddenVehicle(Item("airplane", "It's an airplane"             ))
@@ -67,8 +68,8 @@ class Adventure:
   dio.stand.addFightMove(FightMove("throwing knives",10,60))
 
   holHorse.stand.addFightMove(FightMove("run away",0,10))
-  holHorse.stand.addFightMove(FightMove("homing shot",15,60))
-  holHorse.stand.addFightMove(FightMove("pipe shot",25,75))
+  holHorse.stand.addFightMove(FightMove("homing shot",15,75))
+  holHorse.stand.addFightMove(FightMove("pipe shot",25,105))
 
   enyaba.stand.addFightMove(FightMove("illusion",15,40))
   enyaba.stand.addFightMove(FightMove("body control",25,60))
@@ -87,7 +88,7 @@ class Adventure:
 
 
   /** Determines if the adventure is complete, that is, if the player has won. */
-  def isComplete = !dioMansion.containsEnemy("dio")
+  def isComplete = dioMansion.getEnemy("dio").get.health == 0
 
   /** Determines whether the player has won, lost, or quit, thereby ending the game. */
   def isOver = this.isComplete || this.player.hasQuit || this.turnCount == this.timeLimit || this.player.isDefeated
@@ -104,7 +105,7 @@ class Adventure:
     else if this.turnCount == this.timeLimit then
       "Oh no! You weren't able to defeat DIO in 50 days and you mother was killed by the illness!"
     else if this.player.isDefeated then
-      "You got fucked up bro"
+      "You got f**ked up bro"
     else  // game over due to player quitting
       "Quitter!"
 
