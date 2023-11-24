@@ -40,7 +40,7 @@ class Adventure:
 
   japan         .addVehicle(Item("airplane", "It's an airplane"             ))
   singapore     .addVehicle(Item("train",    "Atleast here it'n not late"   ))
-  india         .addVehicle(Item("Tuk-tuk",  "I need moor boullets"         ))
+  india         .addVehicle(Item("tuk-tuk",  "I need moor boullets"         ))
   pakistan      .addVehicle(Item("jeep",     "Straight from WW2"            ))
   egyptianDesert.addVehicle(Item("camel",    "prepare for drinking breaks"  ))
   nile          .addVehicle(Item("raft",     "There are several holes in it"))
