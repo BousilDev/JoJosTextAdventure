@@ -86,7 +86,7 @@ class Player(startingArea: Area, startingPerson: Person):
     if newBattle.isDefined then
       if !newBattle.get.hasEnded then
         val returnLine = newBattle.get.use(fightMove,this.currentPerson)
-        this.checkBattleStatus
+        this.checkBattleStatus()
         returnLine
       else
         "Your previous battle has already ended..." + "\n"
@@ -104,12 +104,12 @@ class Player(startingArea: Area, startingPerson: Person):
         currentPerson.stand.learnHiddenMoves
 
       val returnLine = newBattle.get.startBattle
-      this.checkBattleStatus
+      this.checkBattleStatus()
       returnLine
     else
       "No enemy called " + enemy + " found..." + "\n"
 
-  private def checkBattleStatus: Unit =
+  private def checkBattleStatus(): Unit =
     if newBattle.get.hasEnded then
       currentPerson.resetHealth
       currentLocation.removeEnemy(newBattle.get.defender)
@@ -129,7 +129,7 @@ class Player(startingArea: Area, startingPerson: Person):
     if newBattle.isDefined then
       if !newBattle.get.hasEnded then
         val returnLine = newBattle.get.skipTurn(this.currentPerson)
-        this.checkBattleStatus
+        this.checkBattleStatus()
         returnLine
       else
         "Your previous battle has already ended..." + "\n"
