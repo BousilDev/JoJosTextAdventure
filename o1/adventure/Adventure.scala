@@ -62,10 +62,10 @@ class Adventure:
   kakkioin.stand.addFightMove(FightMove("emerald splash",50,140))
   kakkioin.stand.addFightMove(FightMove("marionette control",15,90))
 
-  dio.stand.addFightMove(FightMove("za warudo",50,250))
-  dio.stand.addFightMove(FightMove("road roller", 29,200))
-  dio.stand.addFightMove(FightMove("shotgun kick",5,50))
-  dio.stand.addFightMove(FightMove("throwing knives",10,60))
+  dio.stand.addFightMove(FightMove("za warudo",30,200))
+  dio.stand.addFightMove(FightMove("road roller", 20,120))
+  dio.stand.addFightMove(FightMove("shotgun kick",4,50))
+  dio.stand.addFightMove(FightMove("throwing knives",8,80))
 
   holHorse.stand.addFightMove(FightMove("run away",0,10))
   holHorse.stand.addFightMove(FightMove("homing shot",15,75))
