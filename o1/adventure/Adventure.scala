@@ -57,7 +57,7 @@ class Adventure:
 
   jotaro.stand.addFightMove(FightMove("ora",8,75))
   jotaro.stand.addFightMove(FightMove("star finger",20,120))
-  jotaro.stand.addHiddenFightMove(FightMove("za warudo",50,250))
+  jotaro.stand.addHiddenFightMove(FightMove("za warudo",44,250))
 
   kakkioin.stand.addFightMove(FightMove("emerald splash",50,140))
   kakkioin.stand.addFightMove(FightMove("marionette control",15,90))

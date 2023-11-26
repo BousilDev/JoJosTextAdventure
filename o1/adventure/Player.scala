@@ -111,7 +111,7 @@ class Player(startingArea: Area, startingPerson: Person):
 
   private def checkBattleStatus(): Unit =
     if newBattle.get.hasEnded then
-      currentPerson.resetHealth
+      currentPerson.resetHealth()
       currentLocation.removeEnemy(newBattle.get.defender)
       currentLocation.allowVehicles
 

@@ -12,9 +12,7 @@ class Person(val name: String, val stand: Stand, var health: Int, val battleDesc
   
   def decreaseHealth(amount: Int):Unit = health -= amount
   
-  def resetHealth:Unit =
+  def resetHealth():Unit =
     health = baseHealth
-    
-  def heal(amount: Int):Unit = health += amount
   
   override def toString = this.name
