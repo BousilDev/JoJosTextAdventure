@@ -72,13 +72,13 @@ class Area(var name: String, var description: String):
     // When there is no battle
     if !this.hasBattle then
       val allItems = this.items++this.vehicles
-      var exitList = "\n\nExits available: " + this.neighbors.keys.mkString(" ")
+      var exitList = "\n\nExits available: " + this.neighbors.keys.mkString(", ")
       var itemList = ""
       if allItems.nonEmpty then
-        itemList += "\nYou see here: " + allItems.mkString(" ")
+        itemList += "\nYou see here: " + allItems.mkString(", ")
       var enemyList = ""
       if this.enemies.nonEmpty then
-        enemyList += "\nEnemies here: " + this.enemies.mkString(" ")
+        enemyList += "\nEnemies here: " + this.enemies.mkString(", ")
       this.description + itemList + enemyList + exitList
 
     // When a battle is going on
