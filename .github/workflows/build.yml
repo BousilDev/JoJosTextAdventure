@@ -1,0 +1,36 @@
+name: Build Scala Application
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Setup Scala CLI
+        uses: VirtusLab/scala-cli-setup@v1
+
+      - name: Package application
+        run: |
+          scala-cli --power package ./o1 \
+            --main-class o1.adventure.ui.AdventureTextUI \
+            --assembly \
+            -o JoJosTextAdventure.jar
+
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: JoJosTextAdventure
+          path: JoJosTextAdventure.jar
